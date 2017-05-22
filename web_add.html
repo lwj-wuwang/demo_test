@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="./jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="./jquery.js"></script>
+</head>
+<body>
+    <h2>添加设备</h2>
+    <form id="from" action="adddevice.php" method="post">
+        <label>设备名称</label>
+        <div><input type="text" name="devicesname"></div>
+        <label>设备序列号</label>
+        <div>
+            <div>
+                <input type="text" id="devicesn" name="devicesn">
+                <span class="must" color="red">必填</span>
+            </div>
+            <div><input type="button" id="sub" value="提交"></div>
+        </div>
+    </form>
+    <script>
+        $("#devicesn").blur(function(){
+            var sn = $("#devicesn").val();
+            if(!sn){
+                alert("设备序列号不能为空！");
+                return;
+            }else{
+
+            }
+        })
+
+        $("#sub").click(function(){
+            var sn = $("#devicesn").val();
+            if(!sn){
+                alert("设备序列号不能为空！");
+                return;
+            }else {
+                $("#from").submit();
+            }
+        })
+    </script>
+
+</body>
+</html>
