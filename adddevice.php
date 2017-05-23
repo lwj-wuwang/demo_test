@@ -16,20 +16,20 @@ $data   = array(
     "title"     => $dname
 );
 //var_dump(json_encode($data));die;
-$url = "http://api.heclouds.com/register_de?register_code=".$register_code;
+$url        = "http://api.heclouds.com/register_de?register_code=".$register_code;
 
-$result = get_html($url,json_encode($data));
-echo '<pre>';
-print_r($result);die;
-$res = json_decode($result);
+$result     = get_html($url,json_encode($data));
+$reClass    = json_decode($result);
+$device_id  = $reClass->data->device_id;
+$device_key = $reClass->data->key;
 
 $insert_data = array(
     'device_sn'      => $sn,
     'device_name'    => $dname,
-    'iot_device_id'  => $res['data']['device_id'],
-    'iot_device_key' => $res['data']['key']
+    'iot_device_id'  => $device_id,
+    'iot_device_key' => $device_key
 );
-$db = new table();
+$db       = new table();
 $inser_id = $db ->insert("device_info", $insert_data);
 if($inser_id){
 
