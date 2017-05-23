@@ -20,7 +20,8 @@ $url = "http://api.heclouds.com/register_de?register_code=".$register_code;
 
 $result = get_html($url,json_encode($data));
 $res = json_decode($result);
-//print_r($res);die;
+echo '<pre>';
+print_r($res);die;
 $insert_data = array(
     'device_sn'      => $sn,
     'device_name'    => $dname,
