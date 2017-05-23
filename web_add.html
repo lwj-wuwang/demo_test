@@ -15,7 +15,7 @@
         <div>
             <div>
                 <input type="text" id="devicesn" name="devicesn">
-                <span class="must" color="red">必填</span>
+                <span class="must" style="color: red;">必填</span>
             </div>
             <div><input type="button" id="sub" value="提交"></div>
         </div>
@@ -24,10 +24,13 @@
         $("#devicesn").blur(function(){
             var sn = $("#devicesn").val();
             if(!sn){
+                $(".must").css('color','red');
+                $(".must").html('必填');
                 alert("设备序列号不能为空！");
                 return;
             }else{
-
+                $(".must").css('color','green');
+                $(".must").html('通过');
             }
         })
 

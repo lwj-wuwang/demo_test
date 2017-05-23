@@ -31,9 +31,7 @@ $insert_data = array(
     'iot_device_id'  => $device_id,
     'iot_device_key' => $device_key
 );
-//echo '<pre>';
-//print_r($insert_data);
-//die;
+
 $db       = new table();
 $inser_id = $db ->insert("device_info", $insert_data);
 if($inser_id){
