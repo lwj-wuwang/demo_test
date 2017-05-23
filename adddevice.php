@@ -17,14 +17,14 @@ $data   = array(
     "title"     => $dname
 );
 //var_dump(json_encode($data));die;
-//$url        = "http://api.heclouds.com/register_de?register_code=".$register_code;
-//
-//$result     = get_html($url,json_encode($data));
-//$reClass    = json_decode($result);
-//$device_id  = $reClass->data->device_id;
-//$device_key = $reClass->data->key;
-$device_id = 6458823;
-$device_key = "bMlvswoZ8L=Al47iwsy7lSNEboo=";
+$url        = "http://api.heclouds.com/register_de?register_code=".$register_code;
+
+$result     = get_html($url,json_encode($data));
+$reClass    = json_decode($result);
+$device_id  = $reClass->data->device_id;
+$device_key = $reClass->data->key;
+//$device_id = 6458823;
+//$device_key = "bMlvswoZ8L=Al47iwsy7lSNEboo=";
 $insert_data = array(
     'device_sn'      => $sn,
     'device_name'    => $dname,
