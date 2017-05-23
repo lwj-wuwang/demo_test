@@ -6,9 +6,8 @@
  * Time: 16:19
  */
 
-$config = array(
-    "host"               => "loaclhost",
-    "mysql_username"    => "root",
-    "mysql_password"    => "root",
-    "mysql_database"    => "onenet_demo"
-);
+define("DB_HOST","localhost");
+define("DB_NAME","onenet_demo");
+define("DB_USERNAME","root");
+define("DB_PASSWORD","root");
+define("DB_CHARSET","utf8");
