@@ -7,10 +7,11 @@
  */
 require_once "./config.php";
 class table{
+    private $_link;
     function __construct(){
-        mysqli_connect(DB_HOST,DB_USERNAME,DB_PASSWORD);
-        mysql_query("set names 'utf8'");
-        mysql_select_db(DB_NAME);
+        $this->_link = mysql_connect(DB_HOST,DB_USERNAME,DB_PASSWORD);
+        mysql_query("set names 'utf8'",$this->_link);
+        mysql_select_db(DB_NAME,$this->_link);
     }
 
     function insert($table,$data){
@@ -18,11 +19,13 @@ class table{
             return false;
         }
 
-        $keys   = "'" . join("','",array_keys($data)) . "'";
+        $keys   = join(",",array_keys($data));
         $vals   = "'" . join("','",$data ) . "'";
         $SQL    = "INSERT INTO ". $table ."({$keys}) VALUES({$vals})";
-        $result = mysql_query($SQL);
-        return $result;
+//        echo $SQL;die;
+         mysql_query($SQL,$this->_link);
+        $insert_id = mysql_insert_id($this->_link);
+        return $insert_id;
     }
 
     function update($table,$data,$where){
@@ -37,8 +40,8 @@ class table{
                 $char   .= ",'" .$key . "'='" . $val . "'";
             }
         }
-        $SQL = "UPDATE ".$table . " SET " . $char ." WHERE " . $where;
-        $result  = mysql_query($SQL);
+        $SQL        = "UPDATE ".$table . " SET " . $char ." WHERE " . $where;
+        $result     = mysql_query($SQL,$this->_link);
         return $result;
     }
 
@@ -48,7 +51,7 @@ class table{
         }
 
         $SQL     = "DELETE {$table} WHERE {$where}";
-        $result  = mysql_query($SQL);
+        $result  = mysql_query($SQL,$this->_link);
         return $result;
     }
 }
