@@ -6,6 +6,8 @@
  * Time: 16:06
  */
 header("Content-type: text/html; charset=utf-8");
+date_default_timezone_set('Asia/beijing');
+
 include_once "./func.php";
 include_once "./model.php";
 include_once "./iot_php/OneNetApi.php";
@@ -15,10 +17,11 @@ $dname  = empty($_GET['devicesname']) ?  trim($_POST['devicesname'])   :  trim($
 $desc   = empty($_GET['devicesdesc']) ?  $_POST['devicesdesc']         :  $_GET['devicesdesc'];
 
 $data           = array(
-    "sn"        => $sn,
+    "auth_info" => $sn,
     "title"     => $dname,
     "protocol"  => "EDP",
     "desc"      => $desc,
+    "private"   => false
 );
 
 $register_code  = "Fj9XY3o8RtK0Bo5l";//注册码
@@ -34,25 +37,26 @@ $error      = '';
 if(empty($result)){
     $error_code = $sm->error_no();
     $error      = $sm->error();
+    return;
 }else{
-    echo '<pre>';
-    print_r($result);
+//    echo '<pre>';
+//    print_r($result);
+    $device_id = $result['device_id'];
 
 }
 
-die;
 
-$result     = get_html($url,json_encode($data));
-$reClass    = json_decode($result);
-$device_id  = $reClass->data->device_id;
-$device_key = $reClass->data->key;
-//$device_id = 6458823;
-//$device_key = "bMlvswoZ8L=Al47iwsy7lSNEboo=";
+//$result     = get_html($url,json_encode($data));
+//$reClass    = json_decode($result);
+//$device_id  = $reClass->data->device_id;
+//$device_key = $reClass->data->key;
+
 $insert_data = array(
     'device_sn'      => $sn,
     'device_name'    => $dname,
     'iot_device_id'  => $device_id,
-    'iot_device_key' => $device_key
+    'device_desc'    => $desc,
+    'addtime'        => time()
 );
 
 $db       = new table();

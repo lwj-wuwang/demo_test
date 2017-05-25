@@ -8,3 +8,6 @@ CREATE TABLE `onenet_demo`.`device_info`(
   PRIMARY KEY (`id`)
 ) CHARSET=utf8
 COMMENT='设备信息表';
+
+ALTER TABLE `onenet_demo`.`device_info`
+  ADD COLUMN `device_desc` VARCHAR(255) NULL   COMMENT '个性描述' AFTER `addtime`;
