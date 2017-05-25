@@ -6,7 +6,7 @@
  * Time: 16:06
  */
 header("Content-type: text/html; charset=utf-8");
-date_default_timezone_set('Asia/beijing');
+date_default_timezone_set('Asia/Chongqing');
 
 include_once "./func.php";
 include_once "./model.php";
@@ -21,7 +21,7 @@ $data           = array(
     "title"     => $dname,
     "protocol"  => "EDP",
     "desc"      => $desc,
-    "private"   => false
+    "private"   => true
 );
 
 $register_code  = "Fj9XY3o8RtK0Bo5l";//注册码
