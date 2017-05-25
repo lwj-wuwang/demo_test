@@ -10,9 +10,9 @@ include_once "./func.php";
 include_once "./model.php";
 include_once "./iot_php/OneNetApi.php";
 
-$sn     = empty($_GET['devicesn'])    ?  $_POST['devicesn']     :  $_GET['devicesn'];
-$dname  = empty($_GET['devicesname']) ?  $_POST['devicesname']  :  $_GET['devicesname'];
-$desc   = empty($_GET['devicesdesc']) ?  $_POST['devicesdesc']  :  $_GET['devicesdesc'];
+$sn     = empty($_GET['devicesn'])    ?  trim($_POST['devicesn'])     :  trim($_GET['devicesn']);
+$dname  = empty($_GET['devicesname']) ?  trim($_POST['devicesname'])   :  trim($_GET['devicesname']);
+$desc   = empty($_GET['devicesdesc']) ?  $_POST['devicesdesc']         :  $_GET['devicesdesc'];
 
 $data           = array(
     "sn"        => $sn,
