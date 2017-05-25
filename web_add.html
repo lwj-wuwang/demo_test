@@ -15,35 +15,44 @@
             border-radius:5px;
             /*margin: 0 auto*/
         }
-        .form_div{margin-bottom: 1.5rem;margin: 0 auto}
+        .form_div{margin: 0.8rem auto;width: 70%;}
+        .div_sn{
+            width: 80%;
+            margin-left: 15%;
+        }
+        .form_sub{width: 60%;}
+        #devicesn{width: 87.5%;}
         #sub{
-            /*width:100px;*/
+
             width:100%;
             height:35px;
             line-height:35px;
             border-radius:0.5rem;
-
+            background: #26C0F2;
+            color: #fff;
+            border: 0;
         }
+        .must{color: red;}
     </style>
 </head>
 <body>
     <div class="container">
         <h1 class="title">添加设备</h1>
-        <div style="border: 1px solid red">
+        <div>
             <form id="from" action="adddevice.php" method="post">
-                <div class="form_div" style="border: 1px solid green;width: 70%;">
+                <div class="form_div" >
                     <div><label>设备名称</label></div>
                     <div><input type="text" name="devicesname" class="input-text"></div>
                 </div>
-                <div class="form_div" style="border: 1px solid green;width: 70%;">
+                <div class="form_div div_sn" >
                     <div><label>设备序列号</label></div>
                         <div>
                             <input type="text" id="devicesn" name="devicesn" class="input-text">
-                            <span class="must" style="color: red;">必填</span>
+                            <span class="must" >必填</span>
                         </div>
                 </div>
-                <div class="form_div" style="border: 1px solid green;width: 60%;">
-                    <div><input type="button" id="sub" value="提交"></div>
+                <div class="form_div form_sub" >
+                    <div class="div_sub"><input type="button" id="sub" value="提交"></div>
                 </div>
             </form>
         </div>
