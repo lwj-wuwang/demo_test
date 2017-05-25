@@ -8,16 +8,39 @@
 header("Content-type: text/html; charset=utf-8");
 include_once "./func.php";
 include_once "./model.php";
+include_once "./iot_php/OneNetApi.php";
 
 $sn     = empty($_GET['devicesn'])    ?  $_POST['devicesn']     :  $_GET['devicesn'];
-$dname  = empty($_GET['devicesname']) ?  $_POST['devicesname'] :  $_GET['devicesname'];
-$register_code = "Fj9XY3o8RtK0Bo5l";
-$data   = array(
+$dname  = empty($_GET['devicesname']) ?  $_POST['devicesname']  :  $_GET['devicesname'];
+$desc   = empty($_GET['devicesdesc']) ?  $_POST['devicesdesc']  :  $_GET['devicesdesc'];
+
+$data           = array(
     "sn"        => $sn,
-    "title"     => $dname
+    "title"     => $dname,
+    "protocol"  => "EDP",
+    "desc"      => $desc,
 );
-//var_dump(json_encode($data));die;
-$url        = "http://api.heclouds.com/register_de?register_code=".$register_code;
+
+$register_code  = "Fj9XY3o8RtK0Bo5l";//注册码
+$master_key     = "8D=h5AFr8ueFS8XWX4=o=L7u9M4=";//产品APIKey
+
+$apiurl     = 'http://api.heclouds.com';
+//$url        = "http://api.heclouds.com/register_de?register_code=".$register_code;
+$sm         = new OneNetApi($master_key, $apiurl);
+$result     = $sm->device_add(json_encode($data));
+$error_code = 0;
+$error      = '';
+
+if(empty($result)){
+    $error_code = $sm->error_no();
+    $error      = $sm->error();
+}else{
+    echo '<pre>';
+    print_r($result);
+
+}
+
+die;
 
 $result     = get_html($url,json_encode($data));
 $reClass    = json_decode($result);
