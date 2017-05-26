@@ -38,7 +38,7 @@ $oauth2_url   = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$app
 
 //判断code
 if(empty($_GET['code'])){
-    header("location:",$oauth2_url);
+    header("Location:".$oauth2_url);
     exit;
 
 }else{
@@ -60,7 +60,7 @@ file_put_contents("./file.txt", date("Y-m-d H:i:s")."userinfo".print_r($userinfo
 
 if(empty($userinfo)){
 
-    header("location:",$oauth2_url);
+    header("Location:".$oauth2_url);
     exit;
 }
 
