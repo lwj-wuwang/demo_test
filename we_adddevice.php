@@ -18,10 +18,11 @@ require_once "./model.php";
 
 session_start();
 $dev_sn       = $_GET['device_sn'];
-$dev_name     = "设备 " . $_GET['version'];
+$dev_name     = $_GET['version'];
 
 $_SESSION['dev']['sn']      = $dev_sn;
 $_SESSION['dev']['name']    = $dev_name;
+file_put_contents("./file.txt", date("Y-m-d H:i:s")."session".print_r($_SESSION, TRUE), FILE_APPEND);
 
 $jump_url = site_url(true)."/demo_test/error.php";
 
@@ -42,9 +43,12 @@ if(empty($_GET['code'])){
 
 }else{
     $code           = $_GET['code'];
+    file_put_contents("./file.txt", date("Y-m-d H:i:s")."code".print_r($code, TRUE), FILE_APPEND);
 }
 
 $tokenArr           = get_access_token($code,APPId,SECRET);
+file_put_contents("./file.txt", date("Y-m-d H:i:s")."access_token".print_r($tokenArr, TRUE), FILE_APPEND);
+
 if(!empty($tokenArr)){
     $access_token   = $tokenArr['access_token'];
     $openid         = $tokenArr['openid'];
@@ -52,6 +56,7 @@ if(!empty($tokenArr)){
 }
 
 $userinfo           = get_user_info($access_token,$openid);
+file_put_contents("./file.txt", date("Y-m-d H:i:s")."userinfo".print_r($userinfo, TRUE), FILE_APPEND);die;
 
 if(empty($userinfo)){
 
@@ -64,7 +69,7 @@ if(empty($userinfo)){
 $OneClass       = new OneNetApi(MASTER_KEY,API_URL);
 $dev_data       = array(
     'auth_info'     => $_SESSION['dev']['sn'],
-    'title'         => $_SESSION['dev']['name'],
+    'title'         => "设备 " . $_SESSION['dev']['name'],
     'protocol'      => PROTOCOL,
     'private'       => true
 );
