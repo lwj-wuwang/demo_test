@@ -7,7 +7,9 @@
  * url:http://cs.37jy.com/demo_test/we_adddevice.php?device_sn=201705261443&version=XQ270a
  */
 
+header("Content-type: text/html; charset=utf-8");
 date_default_timezone_set('Asia/Chongqing');
+
 require_once "./func.php";
 require_once "./config.php";
 require_once "./iot_php/OneNetApi.php";
@@ -26,14 +28,14 @@ file_put_contents("./file.txt", date("Y-m-d H:i:s")."session".print_r($_SESSION,
 
 $jump_url = site_url(true)."/demo_test/error.php";
 
-if( !isset($_SESSION['dev']['sn'] ) || empty($_SESSION['dev']['name'] )){
-    MobileErrorJS("非法请求",$jump_url);die;
-}
+//if( !isset($_SESSION['dev']['sn'] ) || empty($_SESSION['dev']['name'] )){
+//    MobileErrorJS("非法请求",$jump_url);die;
+//}
 
 
 $appid        = APPId;
 $appsecret    = SECRET;
-$redirect_url = urlencode(REDIRECT_URI);
+$redirect_url = urlencode(REDIRECT_URL);
 $oauth2_url   = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appid}&redirect_uri={$redirect_url}&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect";
 
 //判断code
