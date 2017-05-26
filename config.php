@@ -22,3 +22,5 @@ define("REGISTER_CODE","Fj9XY3o8RtK0Bo5l");             //注册码
 define("MASTER_KEY","8D=h5AFr8ueFS8XWX4=o=L7u9M4=");    //产品APIKey
 define("PROTOCOL","EDP");                               //接入协议
 define("API_URL","http://api.heclouds.com");            //API请求地址
+
+
