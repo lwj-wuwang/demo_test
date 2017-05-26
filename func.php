@@ -39,9 +39,16 @@ function get_access_token($code,$appid,$appsecret){
 
 //获取用户信息
 function get_user_info($access_token,$openid){
-    $url    = "https://api.weixin.qq.com/sns/userinfo?access_token={$access_token}&openid={$openid}&lang=zh_CN ";
-    $result = get_html($url);
-    return json_decode($result);
+    $url         = "https://api.weixin.qq.com/sns/userinfo?access_token={$access_token}&openid={$openid}&lang=zh_CN ";
+    $result      = get_html($url);
+    $content     = json_decode($result,true);
+    if(is_array($content) && !empty($content)){
+        $outArr  = array(
+            'access_token' => $content['access_token'],
+            'openid'        => $content['openid'],
+        );
+    }
+    return $outArr;
 }
 
 

@@ -19,18 +19,22 @@ require_once "./model.php";
 //file_put_contents("./get_dev.txt", print_r($_GET, TRUE), FILE_APPEND);die;
 
 session_start();
-$dev_sn       = $_GET['device_sn'];
-$dev_name     = $_GET['version'];
 
-$_SESSION['dev']['sn']      = $dev_sn;
-$_SESSION['dev']['name']    = $dev_name;
+if(!isset($_SESSION['dev']['sn'] ) || empty($_SESSION['dev']['name'] )){
+    $dev_sn       = $_GET['device_sn'];
+    $dev_name     = $_GET['version'];
+
+    $_SESSION['dev']['sn']      = $dev_sn;
+    $_SESSION['dev']['name']    = $dev_name;
+}
+
 file_put_contents("./file.txt", date("Y-m-d H:i:s")."session".print_r($_SESSION, TRUE), FILE_APPEND);
 
 $jump_url = site_url(true)."/demo_test/error.php";
 
-//if( !isset($_SESSION['dev']['sn'] ) || empty($_SESSION['dev']['name'] )){
-//    MobileErrorJS("非法请求",$jump_url);die;
-//}
+if( !isset($_SESSION['dev']['sn'] ) || empty($_SESSION['dev']['name'] )){
+    MobileErrorJS("非法请求",$jump_url);die;
+}
 
 
 $appid        = APPId;
