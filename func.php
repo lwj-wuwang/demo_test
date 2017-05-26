@@ -42,10 +42,11 @@ function get_user_info($access_token,$openid){
     $url         = "https://api.weixin.qq.com/sns/userinfo?access_token={$access_token}&openid={$openid}&lang=zh_CN ";
     $result      = get_html($url);
     $content     = json_decode($result,true);
+    file_put_contents("./res.txt", date("Y-m-d H:i:s").print_r($content, TRUE), FILE_APPEND);
     if(is_array($content) && !empty($content)){
         $outArr  = array(
-            'access_token' => $content['access_token'],
-            'openid'        => $content['openid'],
+            'access_token' => $content->access_token,
+            'openid'        => $content->openid,
         );
     }
     return $outArr;

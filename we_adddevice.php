@@ -85,8 +85,8 @@ $error_code = 0;
 $error      = '';
 
 if(empty($result)){
-    $error_code = $sm->error_no();
-    $error      = $sm->error();
+    $error_code = $OneClass->error_no();
+    $error      = $OneClass->error();
     MobileErrorJS($error,$jump_url);
     exit;
 }else{
