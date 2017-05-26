@@ -14,7 +14,7 @@ require_once "./iot_php/OneNetApi.php";
 require_once "./model.php";
 
 
-file_put_contents("./get_dev.txt", print_r($_GET, TRUE), FILE_APPEND);die;
+//file_put_contents("./get_dev.txt", print_r($_GET, TRUE), FILE_APPEND);die;
 
 session_start();
 $dev_sn       = $_GET['device_sn'];
