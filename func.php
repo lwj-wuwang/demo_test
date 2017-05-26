@@ -43,3 +43,44 @@ function get_user_info($access_token,$openid){
     $result = get_html($url);
     return json_decode($result);
 }
+
+
+/***
+ * 提示
+ * @param string $Err       错误信息
+ * @param string $URL       跳转地址
+ * @param string $JavaScript        js代码
+ */
+function MobileErrorJS($Err="",$URL="",$JavaScript=""){
+    echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+    echo "<script language='javascript'>";
+
+    if( $Err!="" ){
+        echo "alert('{$Err}');";
+    }
+
+    if( $JavaScript!="" ){
+        echo $JavaScript;
+        echo "</script>";
+        exit;
+    }
+
+    if( $URL=="" ){
+        echo "location='{$_SERVER['HTTP_REFERER']}'";
+    }else{
+        echo "location='{$URL}'";
+    }
+    echo "</script>";
+    exit;
+}
+
+
+//获取网站的网站地址 或者访问地址
+function site_url($host = false) {
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+    $url      = $protocol . $_SERVER[HTTP_HOST] . $_SERVER[REQUEST_URI];
+    if ($host) {
+        return $protocol . $_SERVER[HTTP_HOST];
+    }
+    return $url;
+}
