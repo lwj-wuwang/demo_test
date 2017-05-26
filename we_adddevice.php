@@ -34,7 +34,7 @@ if( !isset($_SESSION['dev']['sn'] ) || empty($_SESSION['dev']['name'] )){
 $appid        = APPId;
 $appsecret    = SECRET;
 $redirect_url = urlencode(REDIRECT_URI);
-$oauth2_url   = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appid}&redirect_uri={$redirect_url}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+$oauth2_url   = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appid}&redirect_uri={$redirect_url}&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect";
 
 //判断code
 if(empty($_GET['code'])){
