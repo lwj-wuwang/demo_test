@@ -4,6 +4,7 @@
  * User: lvwenjing
  * Date: 2017/5/25
  * Time: 16:57
+ * url:http://cs.37jy.com/demo_test/we_adddevice.php?device_sn=201705261443&version=XQ270a
  */
 
 date_default_timezone_set('Asia/Chongqing');
@@ -11,6 +12,7 @@ require_once "./func.php";
 require_once "./config.php";
 require_once "./iot_php/OneNetApi.php";
 require_once "./model.php";
+
 
 file_put_contents("./get_dev.txt", print_r($_GET, TRUE), FILE_APPEND);die;
 
