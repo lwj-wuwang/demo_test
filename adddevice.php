@@ -11,6 +11,7 @@ date_default_timezone_set('Asia/Chongqing');
 include_once "./func.php";
 include_once "./model.php";
 include_once "./iot_php/OneNetApi.php";
+include_once "./config.php";
 
 $sn     = empty($_GET['devicesn'])    ?  trim($_POST['devicesn'])     :  trim($_GET['devicesn']);
 $dname  = empty($_GET['devicesname']) ?  trim($_POST['devicesname'])   :  trim($_GET['devicesname']);
@@ -19,7 +20,7 @@ $desc   = empty($_GET['devicesdesc']) ?  $_POST['devicesdesc']         :  $_GET[
 $data           = array(
     "auth_info" => $sn,
     "title"     => $dname,
-    "protocol"  => "EDP",
+    "protocol"  => PROTOCOL,
     "desc"      => $desc,
     "private"   => true
 );
@@ -27,9 +28,9 @@ $data           = array(
 $register_code  = "Fj9XY3o8RtK0Bo5l";//注册码
 $master_key     = "8D=h5AFr8ueFS8XWX4=o=L7u9M4=";//产品APIKey
 
-$apiurl     = 'http://api.heclouds.com';
-//$url        = "http://api.heclouds.com/register_de?register_code=".$register_code;
-$sm         = new OneNetApi($master_key, $apiurl);
+//$apiurl     = 'http://api.heclouds.com';
+//$url        = "http://api.heclouds.com/register_de?register_code=".REGISTER_CODE;
+$sm         = new OneNetApi(MASTER_KEY, API_URL);
 $result     = $sm->device_add(json_encode($data));
 $error_code = 0;
 $error      = '';

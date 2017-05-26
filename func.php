@@ -30,3 +30,16 @@ function get_html($url,$data='') {
     return false;
 }
 
+//获取access_token
+function get_access_token($code,$appid,$appsecret){
+    $url    = "https://api.weixin.qq.com/sns/oauth2/access_token?appid={$appid}&secret={$appsecret}&code={$code}&grant_type=authorization_code ";
+    $result = get_html($url);
+    return json_decode($result);
+}
+
+//获取用户信息
+function get_user_info($access_token,$openid){
+    $url    = "https://api.weixin.qq.com/sns/userinfo?access_token={$access_token}&openid={$openid}&lang=zh_CN ";
+    $result = get_html($url);
+    return json_decode($result);
+}
