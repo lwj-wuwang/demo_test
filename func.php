@@ -46,7 +46,7 @@ function get_access_token($code,$appid,$appsecret){
     }
     return false;
 }
-s
+
 //获取用户信息
 function get_user_info($access_token,$openid){
     $url    = "https://api.weixin.qq.com/sns/userinfo?access_token={$access_token}&openid={$openid}&lang=zh_CN ";
