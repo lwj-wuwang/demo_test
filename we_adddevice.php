@@ -20,12 +20,9 @@ require_once "./model.php";
 
 session_start();
 
-if(!isset($_SESSION['dev']['sn'] ) || empty($_SESSION['dev']['name'] )){
-    $dev_sn       = $_GET['device_sn'];
-    $dev_name     = $_GET['version'];
-
-    $_SESSION['dev']['sn']      = $dev_sn;
-    $_SESSION['dev']['name']    = $dev_name;
+if(!empty($_GET['device_sn']) && !empty($_GET['version'])){
+    $_SESSION['dev']['sn']      = $_GET['device_sn'];
+    $_SESSION['dev']['name']    = $_GET['version'];
 }
 
 file_put_contents("./file.txt", date("Y-m-d H:i:s")."session".print_r($_SESSION, TRUE), FILE_APPEND);
