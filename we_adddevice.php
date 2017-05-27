@@ -95,7 +95,7 @@ if(empty($res)){
 $insert_data = array(
     'username'  =>  $userinfo->nickname . "_" . rand(10000,99999), //用户名
     'alias'     =>  $userinfo->nickname,                           //昵称
-    'sex'       =>  "'" . $userinfo->sex . "'",                    //性别
+    'sex'       =>  $userinfo->sex ,                               //性别
     'province'  =>  $userinfo->province,                           //省份
     'city'      =>  $userinfo->city,                               //市区
     'headerimg' =>  $userinfo->headimgurl,                         //头像
