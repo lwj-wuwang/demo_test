@@ -31,7 +31,7 @@ if(!isset($_SESSION['dev']['sn'] ) || empty($_SESSION['dev']['name'] )){
 file_put_contents("./file.txt", date("Y-m-d H:i:s")."session".print_r($_SESSION, TRUE), FILE_APPEND);
 
 $jump_url = site_url(true)."/demo_test/error.php";
-echo $jump_url;
+
 
 if( !isset($_SESSION['dev']['sn'] ) || empty($_SESSION['dev']['name'] )){
     MobileErrorJS("非法请求",$jump_url);die;
@@ -50,11 +50,11 @@ if(empty($_GET['code'])){
 
 }else{
     $code           = $_GET['code'];
-    file_put_contents("./file.txt", date("Y-m-d H:i:s")."code".print_r($code, TRUE), FILE_APPEND);
+
 }
 
 $tokenArr           = get_access_token($code,APPId,SECRET);
-file_put_contents("./file.txt", date("Y-m-d H:i:s")."access_token".print_r($tokenArr, TRUE), FILE_APPEND);
+
 
 if(!empty($tokenArr)){
     $access_token   = $tokenArr['access_token'];
@@ -63,7 +63,7 @@ if(!empty($tokenArr)){
 }
 
 $userinfo           = get_user_info($access_token,$openid);
-file_put_contents("./file.txt", date("Y-m-d H:i:s")."userinfo".print_r($userinfo, TRUE), FILE_APPEND);die;
+//file_put_contents("./file.txt", date("Y-m-d H:i:s")."userinfo".print_r($userinfo, TRUE), FILE_APPEND);die;
 
 if(empty($userinfo)){
 
@@ -96,13 +96,13 @@ if(empty($res)){
 
 
 $insert_data = array(
-    'username'  =>  $userinfo['nickname'] . "_" . rand(10000,99999), //用户名
-    'alias'     =>  $userinfo['nickname'],                           //昵称
-    'sex'       =>  "'" . $userinfo['sex'] . "'",                    //性别
-    'province'  =>  $userinfo['province'],                           //省份
-    'city'      =>  $userinfo['city'],                               //市区
-    'headimg'   =>  $userinfo['headimgurl'],                         //头像
-    'openid'    =>  $userinfo['openid'],                             //微信openid
+    'username'  =>  $userinfo->nickname . "_" . rand(10000,99999), //用户名
+    'alias'     =>  $userinfo->nickname,                           //昵称
+    'sex'       =>  "'" . $userinfo->sex . "'",                    //性别
+    'province'  =>  $userinfo->province,                           //省份
+    'city'      =>  $userinfo->city,                               //市区
+    'headimg'   =>  $userinfo->headimgurl,                         //头像
+    'openid'    =>  $userinfo->openid,                             //微信openid
     'regtime'   =>  time(),
     'device_id' =>  $device_id
 
