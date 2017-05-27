@@ -36,7 +36,7 @@ function get_access_token($code,$appid,$appsecret){
     $result = get_html($url);
     $content = json_decode($result);
     file_put_contents("./res.txt", date("Y-m-d H:i:s").'token'.print_r($content, TRUE), FILE_APPEND);
-    if(is_array($content) && !empty($content)){
+    if(is_object($content) && !empty($content)){
         $outArr  = array(
             'access_token' => $content->access_token,
             'openid'        => $content->openid,
@@ -46,7 +46,7 @@ function get_access_token($code,$appid,$appsecret){
     }
     return false;
 }
-
+s
 //获取用户信息
 function get_user_info($access_token,$openid){
     $url    = "https://api.weixin.qq.com/sns/userinfo?access_token={$access_token}&openid={$openid}&lang=zh_CN ";
