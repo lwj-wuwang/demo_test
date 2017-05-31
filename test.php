@@ -6,6 +6,6 @@
  * Time: 10:57
  */
 
-$conn = mysql_connect("localhost","root","xqqdzswsd");
+$conn = mysql_connect("localhost","root","xqqdzswasd");
 $res = mysql_select_db("onenet_demo");
 var_dump($res);
