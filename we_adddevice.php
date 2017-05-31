@@ -91,7 +91,17 @@ if(!empty($res)){
     exit;
 
 }
-file_put_contents("./file.txt", date("Y-m-d H:i:s")."device_id".print_r($device_id, TRUE), FILE_APPEND);
+
+$dev_data = array(
+    'device_sn'      => $_SESSION['dev']['sn'],
+    'device_name'    =>  "设备 " . $_SESSION['dev']['name'],
+    'iot_device_id'  => $device_id,
+    'addtime'        => time()
+);
+
+$db        = new table();
+$inser_dev = $db ->insert("device_info", $dev_data);
+
 
 $insert_data = array(
     'username'  =>  $userinfo->nickname . "_" . rand(10000,99999), //用户名
@@ -106,9 +116,9 @@ $insert_data = array(
 
 );
 
-$userClass = new table();
-$res       = $userClass ->insert("user",$insert_data);
-die;
+//$userClass = new table();
+$res       = $db ->insert("user",$insert_data);
+//die;
 if($res){
     MobileErrorJS("注册成功！","./listdevice.php");
     exit;
