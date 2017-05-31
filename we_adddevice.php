@@ -82,13 +82,14 @@ $res        = $OneClass->device_add(json_encode($dev_data));
 $error_code = 0;
 $error      = '';
 
-if(empty($res)){
+if(!empty($res)){
+    $device_id  = $res['device_id'];
+}else{
     $error_code = $OneClass->error_no();
     $error      = $OneClass->error();
     MobileErrorJS($error,$jump_url);
     exit;
-}else{
-    $device_id = $result['device_id'];
+
 }
 file_put_contents("./file.txt", date("Y-m-d H:i:s")."device_id".print_r($device_id, TRUE), FILE_APPEND);
 
