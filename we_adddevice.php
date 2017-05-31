@@ -25,7 +25,7 @@ if(!empty($_GET['device_sn']) && !empty($_GET['version'])){
     $_SESSION['dev']['name']    = $_GET['version'];
 }
 
-file_put_contents("./file.txt", date("Y-m-d H:i:s")."session".print_r($_SESSION, TRUE), FILE_APPEND);
+//file_put_contents("./file.txt", date("Y-m-d H:i:s")."session".print_r($_SESSION, TRUE), FILE_APPEND);
 
 $jump_url = site_url(true)."/demo_test/error.php";
 
@@ -90,7 +90,7 @@ if(empty($res)){
 }else{
     $device_id = $result['device_id'];
 }
-
+file_put_contents("./file.txt", date("Y-m-d H:i:s")."device_id".print_r($device_id, TRUE), FILE_APPEND);
 
 $insert_data = array(
     'username'  =>  $userinfo->nickname . "_" . rand(10000,99999), //用户名
