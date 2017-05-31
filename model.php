@@ -22,9 +22,10 @@ class table{
         $keys   = join(",",array_keys($data));
         $vals   = "'" . join("','",$data ) . "'";
         $SQL    = "INSERT INTO ". $table ."({$keys}) VALUES({$vals})";
-        file_put_contents("./sql.txt", date("Y-m-d H:i:s").print_r($SQL, TRUE), FILE_APPEND);
-        mysql_query($SQL,$this->_link);
+        $res = mysql_query($SQL,$this->_link);
+        file_put_contents("./sql.txt", date("Y-m-d H:i:s").'res'.print_r($res, TRUE), FILE_APPEND);
         $insert_id = mysql_insert_id($this->_link);
+        file_put_contents("./sql.txt", date("Y-m-d H:i:s").'insert_id'.print_r($insert_id, TRUE), FILE_APPEND);
         return $insert_id;
     }
 

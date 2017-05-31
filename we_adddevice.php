@@ -16,7 +16,6 @@ require_once "./iot_php/OneNetApi.php";
 require_once "./model.php";
 
 
-//file_put_contents("./get_dev.txt", print_r($_GET, TRUE), FILE_APPEND);die;
 
 session_start();
 
@@ -50,18 +49,19 @@ if(empty($_GET['code'])){
 
 }
 
+//获取微信的access_token和openid
 $tokenArr           = get_access_token($code,APPId,SECRET);
-
-
 if(!empty($tokenArr)){
     $access_token   = $tokenArr['access_token'];
     $openid         = $tokenArr['openid'];
 
+}else{
+    header("Location:".$oauth2_url);
+    exit;
 }
 
+//获取微信用户信息
 $userinfo           = get_user_info($access_token,$openid);
-//file_put_contents("./file.txt", date("Y-m-d H:i:s")."userinfo".print_r($userinfo, TRUE), FILE_APPEND);die;
-
 if(empty($userinfo)){
 
     header("Location:".$oauth2_url);
