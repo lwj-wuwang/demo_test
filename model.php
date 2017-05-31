@@ -9,7 +9,7 @@ require_once "./config.php";
 class table{
     protected $_link;
     function __construct(){
-        $this->_link = mysql_connect("localhost","root","xqqdzswsd");
+        $this->_link = mysql_connect(DB_HOST,DB_NAME,DB_PASSWORD);
         mysql_query("set names 'utf8'",$this->_link);
         mysql_select_db(DB_NAME,$this->_link);
     }
