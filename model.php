@@ -7,7 +7,7 @@
  */
 require_once "./config.php";
 class table{
-    private $_link;
+    protected $_link;
     function __construct(){
         $this->_link = mysql_connect(DB_HOST,DB_USERNAME,DB_PASSWORD);
         mysql_query("set names 'utf8'",$this->_link);
