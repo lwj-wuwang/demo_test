@@ -108,6 +108,7 @@ $insert_data = array(
 
 $userClass = new table();
 $res       = $userClass ->insert("user",$insert_data);
+die;
 if($res){
     MobileErrorJS("注册成功！","./listdevice.php");
     exit;
