@@ -24,6 +24,19 @@ if(!empty($_GET['device_sn']) && !empty($_GET['version'])){
     $_SESSION['dev']['name']    = $_GET['version'];
 }
 
+$OneClass       = new OneNetApi(MASTER_KEY,API_URL);
+
+//查询设备是否已经注册
+$master_key     = MASTER_KEY;
+$OneDevUrl      = API_URL."/devices?api-key={$master_key}auth_info={$_SESSION['dev']['sn']}&key_words={$_SESSION['dev']['name']}";
+$result         = get_html($OneDevUrl);
+$devOb          = @json_decode($result,true);
+
+if($devOb->data){//判断设备是否已注册
+    header("Location:"."./dev_index.php");
+    exit;
+}
+
 //file_put_contents("./file.txt", date("Y-m-d H:i:s")."session".print_r($_SESSION, TRUE), FILE_APPEND);
 
 $jump_url = site_url(true)."/demo_test/error.php";
@@ -70,7 +83,7 @@ if(empty($userinfo)){
 
 
 //接入OneNET 完成设备新增
-$OneClass       = new OneNetApi(MASTER_KEY,API_URL);
+
 $dev_data       = array(
     'auth_info'     => $_SESSION['dev']['sn'],
     'title'         => "设备 " . $_SESSION['dev']['name'],
@@ -92,6 +105,7 @@ if(!empty($res)){
 
 }
 
+//设备信息添加
 $dev_data = array(
     'device_sn'      => $_SESSION['dev']['sn'],
     'device_name'    =>  "设备 " . $_SESSION['dev']['name'],
@@ -102,7 +116,7 @@ $dev_data = array(
 $db        = new table();
 $inser_dev = $db ->insert("device_info", $dev_data);
 
-
+//用户信息添加
 $insert_data = array(
     'username'  =>  $userinfo->nickname . "_" . rand(10000,99999), //用户名
     'alias'     =>  $userinfo->nickname,                           //昵称
@@ -116,13 +130,12 @@ $insert_data = array(
 
 );
 
-//$userClass = new table();
 $res       = $db ->insert("user",$insert_data);
 //die;
 if($res){
-    MobileErrorJS("注册成功！","./listdevice.php");
+    MobileErrorJS("设备注册成功！","./wx_code.html");
     exit;
 }else{
-    MobileErrorJS("添加失败！",$jump_url);
+    MobileErrorJS("设备注册失败！",$jump_url);
     exit;
 }
