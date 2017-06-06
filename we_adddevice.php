@@ -28,7 +28,7 @@ $OneClass       = new OneNetApi(MASTER_KEY,API_URL);
 
 //查询设备是否已经注册
 $master_key     = MASTER_KEY;
-$OneDevUrl      = API_URL."/devices?auth_info={$_SESSION['dev']['sn']}&key_words={$_SESSION['dev']['name']}";
+$OneDevUrl      = API_URL."/devices?auth_info={$_SESSION['dev']['sn']}&key_words=设备{$_SESSION['dev']['name']}";
 file_put_contents("./file.txt", date("Y-m-d H:i:s")."OneDevUrl_".print_r($OneDevUrl, TRUE), FILE_APPEND);
 $header         = array("api-key:{$master_key}");
 $result         = get_html($OneDevUrl,$header);
