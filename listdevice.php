@@ -2,3 +2,101 @@
 header("Content-type: text/html; charset=utf-8");
 
 echo "添加成功！";
+
+
+
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WeChat Code</title>
+    <style type="text/css">
+        body,div{margin: 0;padding: 0;font-family: '微软雅黑';}
+        a,img{border: 0;}
+        a{text-decoration: none;}
+        #click_me{
+            width: 100px;
+            height: 30px;
+            border: 1px solid #C40000;
+            background: #be3948;
+            color: white;
+            font-size:16px;
+            margin-right:80px;
+            margin-top:5px;
+        }
+        #cover{
+            /*display: none;*/
+            z-index: 999;
+            background-color: #000;
+            -moz-opacity: 0.8;
+            opacity: 0.40;
+            filter: alpha(opacity=40);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        #code{
+            /*display: none;*/
+            /*left: 45%;*/
+            z-index: 1005;
+            border: 1px solid red;
+            width: 80%;
+            margin: auto;
+            background: #fff;
+        }
+        #close_me{
+            height: 30px;
+            background: #BE3948;
+            line-height: 30px;
+            width: 100%;
+        }
+        #close_str{
+            color: white;
+            float: right;
+            margin-right: 1rem;
+        }
+        .wx{
+            margin-top: 1rem;
+            text-align: center;
+        }
+        .wx_img{
+            text-align: center;
+            margin: 0.5rem auto;
+        }
+    </style>
+    <script type="text/javascript" src="./jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="./jquery.js"></script>
+
+</head>
+<body>
+<?php
+if(empty($_GET['unionid'])){
+
+?>
+
+<div id="cover"></div>
+<div id="code">
+    <div id="close_me">
+        <div id="close_str">关闭</div>
+    </div>
+    <div class="wx">关注公众号</div>
+    <div class="wx_img"><img src="./image/code.png"></div>
+</div>
+<script>
+    $("#close_str").click(function(){
+        debugger;
+        alert('aa');
+        $("#cover").hide();
+        $("#code").hide();
+    })
+</script>
+<?php } ?>
+</body>
+</html>
+
+

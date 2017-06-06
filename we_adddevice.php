@@ -133,11 +133,7 @@ $insert_data = array(
 $res       = $db ->insert("user",$insert_data);
 //die;
 if($res){
-    if(empty($userinfo->unionid)){
-        MobileErrorJS("设备注册成功！","./wx_code.html");
-    }else{
-        MobileErrorJS("设备注册成功！","./listdevice.php");
-    }
+    MobileErrorJS("设备注册成功！","./listdevice.php?unionid={$userinfo->unionid}");
     exit;
 }else{
     MobileErrorJS("设备注册失败！",$jump_url);
