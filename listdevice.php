@@ -1,7 +1,7 @@
 <?php
 header("Content-type: text/html; charset=utf-8");
 
-echo "添加成功！";
+//echo "添加成功！";
 
 
 
@@ -17,16 +17,6 @@ echo "添加成功！";
         body,div{margin: 0;padding: 0;font-family: '微软雅黑';}
         a,img{border: 0;}
         a{text-decoration: none;}
-        #click_me{
-            width: 100px;
-            height: 30px;
-            border: 1px solid #C40000;
-            background: #be3948;
-            color: white;
-            font-size:16px;
-            margin-right:80px;
-            margin-top:5px;
-        }
         #cover{
             /*display: none;*/
             z-index: 999;
@@ -41,11 +31,9 @@ echo "添加成功！";
             height: 100%;
         }
         #code{
-            /*display: none;*/
-            /*left: 45%;*/
             z-index: 1005;
             border: 1px solid red;
-            width: 80%;
+            width: 70%;
             margin: auto;
             background: #fff;
         }
@@ -82,18 +70,16 @@ if(empty($_GET['unionid'])){
 <div id="cover"></div>
 <div id="code">
     <div id="close_me">
-        <div id="close_str">关闭</div>
+        <div id="close_str" onclick="close()">关闭</div>
     </div>
     <div class="wx">关注公众号</div>
     <div class="wx_img"><img src="./image/code.png"></div>
 </div>
 <script>
-    $("#close_str").click(function(){
-        debugger;
-        alert('aa');
+    function close(){
         $("#cover").hide();
         $("#code").hide();
-    })
+    }
 </script>
 <?php } ?>
 </body>
