@@ -28,15 +28,15 @@ $OneClass       = new OneNetApi(MASTER_KEY,API_URL);
 
 //查询设备是否已经注册
 $master_key     = MASTER_KEY;
-$OneDevUrl      = API_URL."/devices?auth_info={$_SESSION['dev']['sn']}&key_words=设备{$_SESSION['dev']['name']}";
-file_put_contents("./file.txt", date("Y-m-d H:i:s")."OneDevUrl_".print_r($OneDevUrl, TRUE), FILE_APPEND);
+$OneDevUrl      = API_URL."/devices?auth_info={$_SESSION['dev']['sn']}";
+//file_put_contents("./file.txt", date("Y-m-d H:i:s")."OneDevUrl_".print_r($OneDevUrl, TRUE), FILE_APPEND);
 $header         = array("api-key:{$master_key}");
 $result         = get_html($OneDevUrl,$header);
-$devOb          = @json_decode($result,true);
+$devArr          = @json_decode($result,true);
 file_put_contents("./file.txt", date("Y-m-d H:i:s")."devOb".print_r($devOb, TRUE), FILE_APPEND);
 
-die;
-if($devOb->data){//判断设备是否已注册
+//die;
+if($devArr['error']='succ' && !empty($devArr['data']['devices'])){//判断设备已注册
     header("Location:"."./dev_index.php");
     exit;
 }
