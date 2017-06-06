@@ -25,22 +25,7 @@ if(!empty($_GET['device_sn']) && !empty($_GET['version'])){
 }
 
 $OneClass       = new OneNetApi(MASTER_KEY,API_URL);
-
-//查询设备是否已经注册
-$master_key     = MASTER_KEY;
-$OneDevUrl      = API_URL."/devices?auth_info={$_SESSION['dev']['sn']}";
-//file_put_contents("./file.txt", date("Y-m-d H:i:s")."OneDevUrl_".print_r($OneDevUrl, TRUE), FILE_APPEND);
-$header         = array("api-key:{$master_key}");
-$result         = get_html($OneDevUrl,$header);
-$devArr          = @json_decode($result,true);
-file_put_contents("./file.txt", date("Y-m-d H:i:s")."devOb".print_r($devOb, TRUE), FILE_APPEND);
-
-//die;
-if($devArr['error']='succ' && !empty($devArr['data']['devices'])){//判断设备已注册
-    header("Location:"."./dev_index.php");
-    exit;
-}
-
+$db             = new table();
 //file_put_contents("./file.txt", date("Y-m-d H:i:s")."session".print_r($_SESSION, TRUE), FILE_APPEND);
 
 $jump_url = site_url(true)."/demo_test/error.php";
@@ -49,6 +34,8 @@ $jump_url = site_url(true)."/demo_test/error.php";
 if( !isset($_SESSION['dev']['sn'] ) || empty($_SESSION['dev']['name'] )){
     MobileErrorJS("非法请求",$jump_url);die;
 }
+
+
 
 
 $appid        = APPId;
@@ -68,15 +55,13 @@ if(empty($_GET['code'])){
 
 //获取微信的access_token和openid
 $tokenArr           = get_access_token($code,APPId,SECRET);
-if(!empty($tokenArr)){
-    $access_token   = $tokenArr['access_token'];
-    $openid         = $tokenArr['openid'];
-
-}else{
+if(empty($tokenArr)){
     header("Location:".$oauth2_url);
     exit;
 }
 
+$access_token   = $tokenArr['access_token'];
+$openid         = $tokenArr['openid'];
 //获取微信用户信息
 $userinfo           = get_user_info($access_token,$openid);
 file_put_contents("./file.txt", date("Y-m-d H:i:s")."userinfo_".print_r($userinfo, TRUE), FILE_APPEND);
@@ -84,41 +69,6 @@ if(empty($userinfo)){
     header("Location:".$oauth2_url);
     exit;
 }
-
-
-//接入OneNET 完成设备新增
-
-$dev_data       = array(
-    'auth_info'     => $_SESSION['dev']['sn'],
-    'title'         => "设备 " . $_SESSION['dev']['name'],
-    'protocol'      => PROTOCOL,
-    'private'       => true
-);
-
-$res        = $OneClass->device_add(json_encode($dev_data));
-$error_code = 0;
-$error      = '';
-
-if(!empty($res)){
-    $device_id  = $res['device_id'];
-}else{
-    $error_code = $OneClass->error_no();
-    $error      = $OneClass->error();
-    MobileErrorJS($error,$jump_url);
-    exit;
-
-}
-
-//设备信息添加
-$dev_data = array(
-    'device_sn'      => $_SESSION['dev']['sn'],
-    'device_name'    =>  "设备 " . $_SESSION['dev']['name'],
-    'iot_device_id'  => $device_id,
-    'addtime'        => time()
-);
-
-$db        = new table();
-$inser_dev = $db ->insert("device_info", $dev_data);
 
 //用户信息添加
 $insert_data = array(
@@ -135,11 +85,65 @@ $insert_data = array(
 );
 
 $res       = $db ->insert("user",$insert_data);
-//die;
-if($res){
-    MobileErrorJS("设备注册成功！","./listdevice.php?unionid={$userinfo->unionid}");
+
+//查询设备是否已经注册
+$master_key     = MASTER_KEY;
+$OneDevUrl      = API_URL."/devices?auth_info={$_SESSION['dev']['sn']}";
+$header         = array("api-key:{$master_key}");
+$result         = get_html($OneDevUrl,$header);
+$devArr         = @json_decode($result,true);
+file_put_contents("./file.txt", date("Y-m-d H:i:s")."devOb".print_r($devArr, TRUE), FILE_APPEND);
+
+if($devArr['error']='succ' && !empty($devArr['data']['devices'])){//判断设备已注册
+    header("Location:"."./dev_index.php");
     exit;
 }else{
-    MobileErrorJS("设备注册失败！",$jump_url);
-    exit;
+    //接入OneNET 完成设备新增
+
+    $dev_data       = array(
+        'auth_info'     => $_SESSION['dev']['sn'],
+        'title'         => "设备 " . $_SESSION['dev']['name'],
+        'protocol'      => PROTOCOL,
+        'private'       => true
+    );
+
+    $res        = $OneClass->device_add(json_encode($dev_data));
+    $error_code = 0;
+    $error      = '';
+
+    if(!empty($res)){
+        $device_id  = $res['device_id'];
+    }else{
+        $error_code = $OneClass->error_no();
+        $error      = $OneClass->error();
+        MobileErrorJS($error,$jump_url);
+        exit;
+
+    }
+
+//设备信息添加
+    $dev_data = array(
+        'device_sn'      => $_SESSION['dev']['sn'],
+        'device_name'    =>  "设备 " . $_SESSION['dev']['name'],
+        'iot_device_id'  => $device_id,
+        'addtime'        => time()
+    );
+
+
+    $last_dev = $db ->insert("device_info", $dev_data);
+
+    if($last_dev){
+        MobileErrorJS("设备注册成功！","./listdevice.php?unionid={$userinfo->unionid}");
+        exit;
+    }else{
+        MobileErrorJS("设备注册失败！",$jump_url);
+        exit;
+    }
+
+
 }
+
+
+
+
+//die;

@@ -45,12 +45,27 @@ class table{
     }
 
     function delete($table,$where){
-        if(empty($table) || empty($data)){
+        if(empty($table) || empty($where)){
             return false;
         }
 
         $SQL     = "DELETE {$table} WHERE {$where}";
         $result  = mysql_query($SQL,$this->_link);
         return $result;
+    }
+
+    function getList($table,$field='*',$wherestr=''){
+        if(empty($table){
+            return false;
+        }
+        $where = "1=1";
+        if($wherestr){
+            $where .= " AND ".$wherestr;
+        }
+        $SQL = "SELECT ".$field . " FROM " . $table ." WHERE " . $where;
+        $result = mysql_query($SQL);
+
+
+
     }
 }
