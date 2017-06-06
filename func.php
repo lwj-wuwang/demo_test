@@ -11,7 +11,7 @@
  * @param $url
  * @return bool|mixed
  */
-function get_html($url,$data='') {
+function get_html($url,$host=null,$data='') {
     if (function_exists('curl_init')) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -23,6 +23,7 @@ function get_html($url,$data='') {
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         }
         curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch,CURLOPT_HTTPHEADER,$host);
         $return = curl_exec($ch);
         curl_close($ch);
         return $return;

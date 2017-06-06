@@ -75,13 +75,17 @@ class OneNetApi
     }
 
     //模糊查询多个设备
-    public function device_list($page = 1, $page_size = 30, $key_word = NULL, $tag = NULL, $is_online = NULL, $is_private = NULL, $device_ids = NULL)
+    public function device_list($page = 1, $page_size = 30, $auth_info=NULL,$key_word = NULL, $tag = NULL, $is_online = NULL, $is_private = NULL, $device_ids = NULL)
     {
         $params = array(
             'page' => is_numeric($page) ? $page : 1,
             'per_page' => is_numeric($page_size) ? $page_size : 30
         );
-        
+
+        if (! is_null($auth_info)) {
+            $params['auth_info'] = $auth_info;
+        }
+
         if (! is_null($key_word)) {
             $params['key_words'] = $key_word;
         }
