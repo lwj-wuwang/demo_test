@@ -1,6 +1,7 @@
 <?php
 header("Content-type: text/html; charset=utf-8");
-
+session_start();
+file_put_contents("./file.txt", date("Y-m-d H:i:s")."session".print_r($_SESSION, TRUE), FILE_APPEND);
 //echo "添加成功！";
 
 

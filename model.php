@@ -54,18 +54,20 @@ class table{
         return $result;
     }
 
-    function getList($table,$field='*',$wherestr=''){
+    function getList($table,$field='*',$where='',$order='',$limit=''){
         if(empty($table){
             return false;
         }
-        $where = "1=1";
-        if($wherestr){
-            $where .= " AND ".$wherestr;
+        $where  = empty($where)  ? ''   : ' AND '.$where;
+        $order  = empty($order)  ? ''   : ' ORDER BY ' . $order;
+        $limit  = empty($limit)  ? ''   : ' LIMIT ' . $limit;
+        $SQL    = "SELECT ".$field . " FROM " . $table ." WHERE 1=1 " . $where . $order . $limit;
+        $query  = mysql_query($SQL,$this->_link);
+        $rows   = array();
+        while($row = mysql_fetch_assoc($query){
+            $rows[] = $row;
         }
-        $SQL = "SELECT ".$field . " FROM " . $table ." WHERE " . $where;
-        $result = mysql_query($SQL);
-
-
+        return $rows;
 
     }
 }

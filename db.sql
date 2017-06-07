@@ -39,3 +39,7 @@ ALTER TABLE `onenet_demo`.`user`
   ADD COLUMN `province` VARCHAR(50) NULL   COMMENT '省份' AFTER `sex`,
   ADD COLUMN `city` VARCHAR(50) NULL   COMMENT '市/州' AFTER `province`,
   ADD COLUMN `area` VARCHAR(50) NULL   COMMENT '区县' AFTER `city`;
+
+
+ALTER TABLE `onenet_demo`.`user`
+  ADD COLUMN `if_focus` INT DEFAULT 0  NULL   COMMENT '是否关注公众号 0未关注 1关注' AFTER `area`;
