@@ -55,7 +55,7 @@ class table{
     }
 
     function getList($table,$field='*',$where='',$order='',$limit=''){
-        if(empty($table){
+        if(empty($table)){
             return false;
         }
         $where  = empty($where)  ? ''   : ' AND '.$where;
