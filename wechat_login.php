@@ -4,7 +4,7 @@
  * User: lvwenjing
  * Date: 2017/5/25
  * Time: 16:57
- * url:http://cs.37jy.com/demo_test/we_adddevice.php?device_sn=201705261443&version=XQ270a
+ * url:http://cs.37jy.com/demo_test/wechat_login.php?device_sn=201705261443&version=XQ270a
  */
 
 
