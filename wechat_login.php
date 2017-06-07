@@ -102,4 +102,5 @@ if(!$user_res){ //用户未注册
 
 $_SESSION['user_id'] = $user_id;
 
-
+header("Location:"."./add_dev.php");
+exit;
