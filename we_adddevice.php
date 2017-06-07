@@ -74,6 +74,7 @@ if( !isset($_SESSION['wx_openid'] ) || empty($_SESSION['wx_openid'] )){
 
 //查询用户是否已注册
 $user_res   = $db->getList('user','*',"openid={$openid}");
+file_put_contents("./file.txt", "user".date("Y-m-d H:i:s").print_r($user_res, TRUE), FILE_APPEND);
 if(!$user_res){ //用户未注册
     //获取微信用户信息
     $userinfo           = get_user_info($access_token,$openid);
