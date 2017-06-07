@@ -70,8 +70,8 @@ $user_res   = $db->getList('user','*',"openid='{$openid}'");
 if(!$user_res){ //用户未注册
     //获取微信用户信息
     $userinfo           = get_user_info($access_token,$openid);
-//    file_put_contents("./file.txt", "userinfo_".date("Y-m-d H:i:s").print_r($userinfo, TRUE), FILE_APPEND);
-//    die;
+    file_put_contents("./file.txt", "userinfo_".date("Y-m-d H:i:s").print_r($userinfo, TRUE), FILE_APPEND);
+    die;
     if(empty($userinfo)){
         header("Location:".$oauth2_url);
         exit;
@@ -92,6 +92,9 @@ if(!$user_res){ //用户未注册
         'if_focus'  =>  $if_focus
 
     );
+
+    file_put_contents("./file.txt", "insert_data_".date("Y-m-d H:i:s").print_r($insert_data, TRUE), FILE_APPEND);
+    die;
     $insert_id      = $db ->insert("user",$insert_data);
     $user_id        = $insert_id;
 
