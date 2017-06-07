@@ -67,6 +67,7 @@ if($devArr['error']='succ' && !empty($devArr['data']['devices'])){//判断设备
         MobileErrorJS("设备注册成功！","./listdevice.php?unionid={$if_focus}");
         exit;
     }else{
+        $jump_url = site_url(true)."/demo_test/error.php";
         MobileErrorJS("设备注册失败！",$jump_url);
         exit;
     }
