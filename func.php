@@ -23,7 +23,9 @@ function get_html($url,$host=null,$data='') {
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         }
         curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch,CURLOPT_HTTPHEADER,$host);
+        if($host){
+            curl_setopt($ch,CURLOPT_HTTPHEADER,$host);
+        }
         $return = curl_exec($ch);
         curl_close($ch);
         return $return;
