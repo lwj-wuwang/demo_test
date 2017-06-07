@@ -62,6 +62,7 @@ class table{
         $order  = empty($order)  ? ''   : ' ORDER BY ' . $order;
         $limit  = empty($limit)  ? ''   : ' LIMIT ' . $limit;
         $SQL    = "SELECT ".$field . " FROM " . $table ." WHERE 1=1 " . $where . $order . $limit;
+        echo $SQL;
         $query  = mysql_query($SQL,$this->_link);
         $rows   = mysql_fetch_assoc($query);
         /*while($row = mysql_fetch_assoc($query){

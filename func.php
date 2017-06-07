@@ -95,3 +95,11 @@ function site_url($host = false) {
     }
     return $url;
 }
+
+
+function debug($data){
+    echo '<pre>';
+    print_r($data);
+    echo '</pre>';
+    die;
+}

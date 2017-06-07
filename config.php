@@ -15,7 +15,7 @@ define("DB_CHARSET","utf8");
 //微信信息
 define("APPId","wx98ab1ee3ed68ccd2");                                       //微信id
 define("SECRET","e1dbbee2e73a4808357ea3209739cf2f");                        //微信密钥
-define("REDIRECT_URL","http://cs.37jy.com/demo_test/we_adddevice.php");     //重定向url
+define("REDIRECT_URL","http://cs.37jy.com/demo_test/wechat_login.php");     //重定向url
 
 //OneNet信息
 define("REGISTER_CODE","Fj9XY3o8RtK0Bo5l");             //注册码
