@@ -17,12 +17,12 @@ if(!empty($_GET['device_sn']) && !empty($_GET['version'])){
 }
 
 
-//file_put_contents("./file.txt", date("Y-m-d H:i:s")."session".print_r($_SESSION, TRUE), FILE_APPEND);
+file_put_contents("./file.txt", "dev_".date("Y-m-d H:i:s").print_r($_SESSION['dev'], TRUE), FILE_APPEND);
 
 
 
 
-if( !isset($_SESSION['dev']['sn'] ) || empty($_SESSION['dev']['name'] )){
+if( empty($_SESSION['dev']['sn'] ) || empty($_SESSION['dev']['name'] )){
     MobileErrorJS("非法请求",$jump_url);die;
 }
 
