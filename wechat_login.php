@@ -12,6 +12,7 @@ require_once "./init.php";
 session_start();
 
 if(!empty($_GET['device_sn']) && !empty($_GET['version'])){
+    unset($_SESSION['wx_openid']);
     $_SESSION['dev']['sn']      = $_GET['device_sn'];
     $_SESSION['dev']['name']    = $_GET['version'];
 }
