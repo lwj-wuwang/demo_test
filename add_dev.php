@@ -9,6 +9,7 @@
 require_once "./init.php";
 session_start();
 
+file_put_contents("./file.txt", date("Y-m-d H:i:s")."devOb".print_r($_SESSION, TRUE), FILE_APPEND);die;
 //查询用户信息
 $userinfo   = $db->getList('user','*',"user_id='{$_SESSION['user_id']}'");
 $if_focus   = $userinfo['if_focus'];
