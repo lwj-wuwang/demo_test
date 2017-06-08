@@ -33,6 +33,7 @@ $redirect_url = urlencode(REDIRECT_URL);
 $oauth2_url   = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appid}&redirect_uri={$redirect_url}&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect";
 
 $openid = $_SESSION['wx_openid'];
+file_put_contents("./file.txt", "openid_".date("Y-m-d H:i:s").print_r($openid, TRUE), FILE_APPEND);
 /*$openid = "oMV6QuJyODe_gsaXsz2M-BBYbdoI";
 $_SESSION['wx_openid']  = $openid;*/
 if(empty($openid)){
