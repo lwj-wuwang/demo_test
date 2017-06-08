@@ -36,8 +36,8 @@ function get_html($url,$host=null,$data='') {
 //获取access_token
 function get_access_token($code,$appid,$appsecret){
     $url     = "https://api.weixin.qq.com/sns/oauth2/access_token?appid={$appid}&secret={$appsecret}&code={$code}&grant_type=authorization_code ";
-    $result = get_html($url);
-    $content = json_decode($result);
+    $result  = get_html($url);
+    $content = @json_decode($result,true);
     if(is_object($content) && !empty($content)){
         $outArr  = array(
             'access_token' => $content->access_token,

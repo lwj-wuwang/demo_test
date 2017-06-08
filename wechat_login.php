@@ -37,23 +37,19 @@ $openid = $_SESSION['wx_openid'];
 $_SESSION['wx_openid']  = $openid;*/
 if(empty($openid)){
     //判断code
-    if(empty($_GET['code'])){
+    if( !isset($_GET['code']) && empty($_GET['code']) ){
         header("Location:".$oauth2_url);
         exit;
 
     }else{
         $code           = $_GET['code'];
+
+        //获取微信的access_token和openid
+        $tokenArr       = get_access_token($code,APPId,SECRET);
+        $access_token   = $tokenArr['access_token'];
+        $openid         = $tokenArr['openid'];
     }
 
-//获取微信的access_token和openid
-    $tokenArr           = get_access_token($code,APPId,SECRET);
-    if(empty($tokenArr)){
-        header("Location:".$oauth2_url);
-        exit;
-    }
-
-    $access_token   = $tokenArr['access_token'];
-    $openid         = $tokenArr['openid'];
     $_SESSION['wx_openid']  = $openid;
 
 }
@@ -62,11 +58,12 @@ if( !isset($_SESSION['wx_openid'] ) || empty($_SESSION['wx_openid'] )){
     MobileErrorJS("非法请求",$jump_url);die;
 }
 
+file_put_contents("./file.txt", "user_openid_".date("Y-m-d H:i:s").print_r($openid, TRUE), FILE_APPEND);
 
 //查询用户是否已注册
 $user_res   = $db->getList('user','*',"openid='{$openid}'");
 //debug($user_res);
-//file_put_contents("./file.txt", "user".date("Y-m-d H:i:s").print_r($user_res, TRUE), FILE_APPEND);
+file_put_contents("./file.txt", "user_".date("Y-m-d H:i:s").print_r($user_res, TRUE), FILE_APPEND);
 if(!$user_res){ //用户未注册
     //获取微信用户信息
     $userinfo           = get_user_info($access_token,$openid);
