@@ -71,7 +71,7 @@ if(!$user_res){ //用户未注册
     //获取微信用户信息
     $userinfo           = get_user_info($access_token,$openid);
     file_put_contents("./file.txt", "userinfo_".date("Y-m-d H:i:s").print_r($userinfo, TRUE), FILE_APPEND);
-    die;
+//    die;
     if(empty($userinfo)){
         header("Location:".$oauth2_url);
         exit;

@@ -19,7 +19,7 @@
         }
         #cover{
             display: none;
-            z-index: 999;
+            z-index: 100;
             background-color: #000;
             -moz-opacity: 0.8;
             opacity: 0.40;
@@ -49,6 +49,7 @@
             color: white;
             float: right;
             margin-right: 1rem;
+            width: auto;
         }
         .wx{
             margin-top: 1rem;
@@ -71,7 +72,7 @@
     <div id="code">
         <!--<div class="coverimg">-->
         <div id="close_me">
-            <div id="str" onclick="closeWin()">关闭</div>
+            <div id="str" onclick="mask_close()">关闭</div>
         </div>
         <div class="wx">关注公众号</div>
         <div class="wx_img"><img src="./image/code.png"></div>
@@ -87,7 +88,7 @@
         $("#code").show();
     })
 
-    function closeWin(){
+    function mask_close(){
         alert(123);
         $("#cover").hide();
         $("#code").hide();
