@@ -35,9 +35,9 @@ class table{
         $char = '';
         foreach($data as $key =>$val){
             if(empty($char)){
-                $char   .= "'" . $key . "'='" . $val . "'";
+                $char   .= "`" . $key . "`='" . $val . "'";
             }else{
-                $char   .= ",'" .$key . "'='" . $val . "'";
+                $char   .= ",`" .$key . "`='" . $val . "'";
             }
         }
         $SQL        = "UPDATE ".$table . " SET " . $char ." WHERE " . $where;
