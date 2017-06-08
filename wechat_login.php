@@ -94,7 +94,7 @@ if(!$user_res){ //用户未注册
     );
 
     file_put_contents("./file.txt", "insert_data_".date("Y-m-d H:i:s").print_r($insert_data, TRUE), FILE_APPEND);
-    die;
+//    die;
     $insert_id      = $db ->insert("user",$insert_data);
     $user_id        = $insert_id;
 
