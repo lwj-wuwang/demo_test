@@ -75,17 +75,17 @@ if(!$user_res){ //用户未注册
         exit;
     }
 
-    $if_focus = empty($userinfo->unionid)    ?   0 : 1;
+    $if_focus = empty($userinfo['unionid'])    ?   0 : 1;
 
 //用户信息添加
     $insert_data = array(
-        'username'  =>  $userinfo->nickname . "_" . rand(10000,99999), //用户名
-        'alias'     =>  $userinfo->nickname,                           //昵称
-        'sex'       =>  $userinfo->sex ,                               //性别
-        'province'  =>  $userinfo->province,                           //省份
-        'city'      =>  $userinfo->city,                               //市区
-        'headerimg' =>  $userinfo->headimgurl,                         //头像
-        'openid'    =>  $userinfo->openid,                             //微信openid
+        'username'  =>  $userinfo['nickname'] . "_" . rand(10000,99999), //用户名
+        'alias'     =>  $userinfo['nickname'],                           //昵称
+        'sex'       =>  $userinfo['sex'] ,                               //性别
+        'province'  =>  $userinfo['province'],                           //省份
+        'city'      =>  $userinfo['city'],                               //市区
+        'headerimg' =>  $userinfo['headimgurl'],                         //头像
+        'openid'    =>  $userinfo['openid'],                             //微信openid
         'regtime'   =>  time(),
         'if_focus'  =>  $if_focus
 
