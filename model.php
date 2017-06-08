@@ -41,7 +41,6 @@ class table{
             }
         }
         $SQL        = "UPDATE ".$table . " SET " . $char ." WHERE " . $where;
-        file_put_contents("./file.txt", "sql_".date("Y-m-d H:i:s").print_r($SQL, TRUE), FILE_APPEND);
         $result     = mysql_query($SQL,$this->_link);
         return $result;
     }

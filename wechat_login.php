@@ -12,7 +12,7 @@ require_once "./init.php";
 session_start();
 
 if(!empty($_GET['device_sn']) && !empty($_GET['version'])){
-    unset($_SESSION['wx_openid']);
+//    unset($_SESSION['wx_openid']);
     $_SESSION['dev']['sn']      = $_GET['device_sn'];
     $_SESSION['dev']['name']    = $_GET['version'];
 }
@@ -35,7 +35,6 @@ if(empty($openid)){
 
     }else{
         $code           = $_GET['code'];
-        file_put_contents("./file.txt", "code_".date("Y-m-d H:i:s").print_r($code, TRUE), FILE_APPEND);
         //获取微信的access_token和openid
         $tokenArr       = get_access_token($code,APPId,SECRET);
         $access_token   = $tokenArr['access_token'];
