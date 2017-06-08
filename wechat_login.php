@@ -17,26 +17,16 @@ if(!empty($_GET['device_sn']) && !empty($_GET['version'])){
     $_SESSION['dev']['name']    = $_GET['version'];
 }
 
-
-file_put_contents("./file.txt", "dev_".date("Y-m-d H:i:s").print_r($_SESSION['dev'], TRUE), FILE_APPEND);
-
-
-
-
 if( empty($_SESSION['dev']['sn'] ) || empty($_SESSION['dev']['name'] )){
     MobileErrorJS("非法请求",$jump_url);die;
 }
-
 
 $appid        = APPId;
 $appsecret    = SECRET;
 $redirect_url = urlencode(REDIRECT_URL);
 $oauth2_url   = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appid}&redirect_uri={$redirect_url}&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect";
 
-$openid = $_SESSION['wx_openid'];
-file_put_contents("./file.txt", "openid_".date("Y-m-d H:i:s").print_r($openid, TRUE), FILE_APPEND);
-/*$openid = "oMV6QuJyODe_gsaXsz2M-BBYbdoI";
-$_SESSION['wx_openid']  = $openid;*/
+$openid       = $_SESSION['wx_openid'];
 if(empty($openid)){
     //判断code
     if( !isset($_GET['code']) && empty($_GET['code']) ){
@@ -60,17 +50,14 @@ if( !isset($_SESSION['wx_openid'] ) || empty($_SESSION['wx_openid'] )){
     MobileErrorJS("非法请求",$jump_url);die;
 }
 
-file_put_contents("./file.txt", "user_openid_".date("Y-m-d H:i:s").print_r($openid, TRUE), FILE_APPEND);
+//file_put_contents("./file.txt", "user_openid_".date("Y-m-d H:i:s").print_r($openid, TRUE), FILE_APPEND);
 
 //查询用户是否已注册
 $user_res   = $db->getList('user','*',"openid='{$openid}'");
-//debug($user_res);
-file_put_contents("./file.txt", "user_".date("Y-m-d H:i:s").print_r($user_res, TRUE), FILE_APPEND);
 if(!$user_res){ //用户未注册
     //获取微信用户信息
     $userinfo           = get_user_info($access_token,$openid);
-    file_put_contents("./file.txt", "userinfo_".date("Y-m-d H:i:s").print_r($userinfo, TRUE), FILE_APPEND);
-//    die;
+
     if(empty($userinfo)){
         header("Location:".$oauth2_url);
         exit;
@@ -92,8 +79,6 @@ if(!$user_res){ //用户未注册
 
     );
 
-    file_put_contents("./file.txt", "insert_data_".date("Y-m-d H:i:s").print_r($insert_data, TRUE), FILE_APPEND);
-//    die;
     $insert_id      = $db ->insert("user",$insert_data);
     $user_id        = $insert_id;
 

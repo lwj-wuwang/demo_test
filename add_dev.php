@@ -9,17 +9,19 @@
 require_once "./init.php";
 session_start();
 
-file_put_contents("./file.txt", "session_".date("Y-m-d H:i:s").print_r($_SESSION, TRUE), FILE_APPEND);die;
+//file_put_contents("./file.txt", "session_".date("Y-m-d H:i:s").print_r($_SESSION, TRUE), FILE_APPEND);die;
 //查询用户信息
 $userinfo   = $db->getList('user','*',"user_id='{$_SESSION['user_id']}'");
 $if_focus   = $userinfo['if_focus'];
+
+$jump_url       = site_url(true)."/demo_test/error.php";
+
 //查询设备是否已经注册
 $master_key     = MASTER_KEY;
 $OneDevUrl      = API_URL."/devices?auth_info={$_SESSION['dev']['sn']}";
 $header         = array("api-key:{$master_key}");
 $result         = get_html($OneDevUrl,$header);
 $devArr         = @json_decode($result,true);
-//file_put_contents("./file.txt", date("Y-m-d H:i:s")."devOb".print_r($devArr, TRUE), FILE_APPEND);
 
 if($devArr['error']='succ' && !empty($devArr['data']['devices'])){//判断设备已注册
     /*header("Location:"."./dev_index.php");
@@ -40,15 +42,14 @@ if($devArr['error']='succ' && !empty($devArr['data']['devices'])){//判断设备
     $error_code = 0;
     $error      = '';
 
-    if(!empty($res)){
-        $device_id  = $res['device_id'];
-    }else{
+    if(empty($res)){
         $error_code = $OneClass->error_no();
         $error      = $OneClass->error();
         MobileErrorJS($error,$jump_url);
         exit;
-
     }
+
+    $device_id  = $res['device_id'];
 
     //设备信息添加
     $dev_data = array(
@@ -68,7 +69,6 @@ if($devArr['error']='succ' && !empty($devArr['data']['devices'])){//判断设备
         MobileErrorJS("设备注册成功！","./listdevice.php?unionid={$if_focus}");
         exit;
     }else{
-        $jump_url = site_url(true)."/demo_test/error.php";
         MobileErrorJS("设备注册失败！",$jump_url);
         exit;
     }
