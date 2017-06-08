@@ -44,7 +44,7 @@ if(empty($openid)){
 
     }else{
         $code           = $_GET['code'];
-
+        file_put_contents("./file.txt", "code_".date("Y-m-d H:i:s").print_r($code, TRUE), FILE_APPEND);
         //获取微信的access_token和openid
         $tokenArr       = get_access_token($code,APPId,SECRET);
         $access_token   = $tokenArr['access_token'];
