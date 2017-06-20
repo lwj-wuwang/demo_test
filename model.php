@@ -5,7 +5,7 @@
  * Date: 2017/5/22 0022
  * Time: 16:26
  */
-require_once "./config.php";
+//include_once "/config.php";
 class table{
     protected $_link;
     function __construct(){

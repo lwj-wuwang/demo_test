@@ -8,11 +8,12 @@
 
 header("Content-type: text/html; charset=utf-8");
 date_default_timezone_set('Asia/Chongqing');
-
-require_once "./func.php";
-require_once "./config.php";
-require_once "./iot_php/OneNetApi.php";
-require_once "./model.php";
+$myPath	= dirname(__FILE__);
+//echo $myPath;die;
+require_once $myPath."/func.php";
+require_once $myPath."/config.php";
+require_once $myPath."/iot_php/OneNetApi.php";
+require_once $myPath."/model.php";
 
 $OneClass       = new OneNetApi(MASTER_KEY,API_URL);
 $db             = new table();

@@ -43,6 +43,7 @@ if(empty($result)){
 //    echo '<pre>';
 //    print_r($result);
     $device_id = $result['device_id'];
+    print_r($device_id);die;
 
 }
 

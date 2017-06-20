@@ -1,9 +1,7 @@
 <?php
-header("Content-type: text/html; charset=utf-8");
 session_start();
-file_put_contents("./file.txt", date("Y-m-d H:i:s")."session".print_r($_SESSION, TRUE), FILE_APPEND);
-//echo "添加成功！";
-
+//file_put_contents("./file.txt", date("Y-m-d H:i:s")."session".print_r($_SESSION, TRUE), FILE_APPEND);
+require_once "./init.php";
 
 
 ?>
@@ -13,7 +11,7 @@ file_put_contents("./file.txt", date("Y-m-d H:i:s")."session".print_r($_SESSION,
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>WeChat Code</title>
+    <title>设备列表</title>
     <style type="text/css">
         body,div{margin: 0;padding: 0;font-family: '微软雅黑';}
         a,img{border: 0;}
@@ -63,26 +61,25 @@ file_put_contents("./file.txt", date("Y-m-d H:i:s")."session".print_r($_SESSION,
 
 </head>
 <body>
-<?php
-if(empty($_GET['unionid'])){
-
-?>
-
-<div id="cover"></div>
-<div id="code">
-    <div id="close_me">
-        <div id="close_str" onclick="close()">关闭</div>
+    <div>
+        <hi>我的设备</hi>
     </div>
-    <div class="wx">关注公众号</div>
-    <div class="wx_img"><img src="./image/code.png"></div>
-</div>
-<script>
-    function close(){
-        $("#cover").hide();
-        $("#code").hide();
-    }
-</script>
-<?php } ?>
+    <?php if(empty($_GET['unionid'])){ ?>
+    <div id="cover"></div>
+    <div id="code">
+        <div id="close_me">
+            <div id="close_str" onclick="close()">关闭</div>
+        </div>
+        <div class="wx">关注公众号</div>
+        <div class="wx_img"><img src="./image/code.png"></div>
+    </div>
+    <script>
+        function close(){
+            $("#cover").hide();
+            $("#code").hide();
+        }
+    </script>
+    <?php } ?>
 </body>
 </html>
 
