@@ -29,6 +29,10 @@ class ApiTest{
 
 
     function UploadData(){
+
+        $json['status'] = false;
+        $json['error']  = '上传数据成功';
+
         $data   = $this->AnalogData();
         $result = $this->_oneOb->datapoint_add($this->_devId,$this->_datastreams,$data);
         if(!$result){//数据上传错误时，尝试多次上传，排除异常，否则告警
@@ -41,12 +45,21 @@ class ApiTest{
 
                 $errorNum++;
             }
-            $message = date("Y-m-d H:i:s")." 连续{$errorNum}次上传失败,请处理！！";
+
+            $json['status'] = true;
+            $json['error']  = '';
+            $json['data']   = array(
+                'times'     => time(),
+                'errorNum'  => $errorNum
+            );
+
+           /* $message = date("Y-m-d H:i:s")." 连续{$errorNum}次上传失败,请处理！！";
             $this->ErrorMessage("数据上传",$message);
-            die('done');
+            */
         }
 
-//        return $result;
+        return json_encode($json);
+
     }
 
 
@@ -96,9 +109,10 @@ EOF;
 }
 
 
-/*$testOb = new ApiTest();
+$testOb = new ApiTest();
 $res = $testOb->UploadData();
-print_r($res);*/
+print_r(json_decode($res,true));
+die;
 
 $raw_input = file_get_contents('php://input');
 $resolved_body = Util::resolveBody($raw_input);
