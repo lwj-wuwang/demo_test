@@ -75,7 +75,7 @@ class OneNetApi
     }
 
     //模糊查询多个设备
-    public function device_list($page = 1, $page_size = 30, $auth_info=NULL,$key_word = NULL, $tag = NULL, $is_online = NULL, $is_private = NULL, $device_ids = NULL)
+    public function device_list($page = 1, $page_size = 30, $auth_info=NULL,$key_word = NULL, $tag = NULL, $is_online = NULL, $is_private = NULL, $device_ids = NULL,$begin=NULL,$end=NULL)
     {
         $params = array(
             'page' => is_numeric($page) ? $page : 1,
@@ -101,15 +101,26 @@ class OneNetApi
         if (! is_null($device_ids)) {
             $params['device_id'] = $device_ids;
         }
-        
+
+        if (! is_null($begin)) {
+            $params['begin'] = $begin;
+        }
+
+        if (! is_null($end)) {
+            $params['end'] = $end;
+        }
+
         $params_str = http_build_query($params);
         
         // 2015-10-29 http build query会将true转义为1，API只接受true/false的布尔串
         if (! is_null($is_online)) {
             $params_str = $params_str . '&online=true';
         }
+
         
         $api = '/devices?' . $params_str;
+
+//        echo $api;die;
         
         return $this->_call($api);
     }
@@ -218,6 +229,7 @@ class OneNetApi
             return FALSE;
         }
         $datastream_data = array();
+
         foreach ($datas as $t => $v) {
             $t = date('Y-m-d\TH:i:s', $t);
             if (empty($t)) {

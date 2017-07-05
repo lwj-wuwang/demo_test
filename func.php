@@ -11,6 +11,10 @@
  * @param $url
  * @return bool|mixed
  */
+
+include_once 'excel/common.inc.php';
+include_once 'excel/PHPExcel/IOFactory.php';
+
 function get_html($url,$host=null,$data='',$port='') {
     if (function_exists('curl_init')) {
         $ch = curl_init();
@@ -99,6 +103,111 @@ function site_url($host = false) {
         return $protocol . $_SERVER[HTTP_HOST];
     }
     return $url;
+}
+
+
+function parse_excel($file)
+{
+    global $bookFields;
+   /* echo '<pre>';
+    print_r($bookFields);die;*/
+    if (!file_exists($file)) {
+        output(-1, '“' . basename($file) . '” 文件不存在！');
+    }
+
+    $objPHPExcel = PHPExcel_IOFactory::load($file);
+
+    $sh         = $objPHPExcel->getSheet(0);
+
+    $maxRow     = $sh->getHighestRow();
+    $maxCol     = $sh->getHighestColumn();
+
+    if( $maxCol != 'L'){
+        return false;
+    }
+
+    $data = $fields = array();
+
+    for ($row = EXCEL_FIELD_ROW; $row <= $maxRow; $row++) {
+        $rowData = $sh->rangeToArray('A' . $row . ':' . $maxCol . $row, FALSE, FALSE, FALSE);
+        $tmpFields = array();
+        foreach ($rowData[0] as $key => $val) {
+
+            if (EXCEL_FIELD_ROW === $row) {
+                $field = array_search($val, $bookFields);
+                if ($field) {
+                    $fields[$key] = $field;
+                }
+            } else if (EXCEL_FIELD_VALID_COL === $key && empty($val)) {
+                continue 2;
+            } else if (isset($fields[$key])) {
+                $tmpFields[$fields[$key]] = $val;
+            }
+        }
+
+        if (count($tmpFields)) {
+            $data[] = $tmpFields;
+        }
+    }
+    if (!count($data)) {
+        output(-1, '解析数据为空！');
+    }
+    /*echo '<pre>';
+    print_r($data);die;*/
+
+    return $data;
+}
+
+function parse_movie_excel($file)
+{
+    global $movieFields;
+    /* echo '<pre>';
+     print_r($bookFields);die;*/
+    if (!file_exists($file)) {
+        output(-1, '“' . basename($file) . '” 文件不存在！');
+    }
+
+    $objPHPExcel = PHPExcel_IOFactory::load($file);
+
+    $sh         = $objPHPExcel->getSheet(0);
+
+    $maxRow     = $sh->getHighestRow();
+    $maxCol     = $sh->getHighestColumn();
+
+    if( $maxCol != 'E'){
+        return false;
+    }
+
+    $data = $fields = array();
+
+    for ($row = EXCEL_FIELD_ROW; $row <= $maxRow; $row++) {
+        $rowData = $sh->rangeToArray('A' . $row . ':' . $maxCol . $row, FALSE, FALSE, FALSE);
+        $tmpFields = array();
+        foreach ($rowData[0] as $key => $val) {
+
+            if (EXCEL_FIELD_ROW === $row) {
+                $field = array_search($val, $movieFields);
+                if ($field) {
+                    $fields[$key] = $field;
+                }
+            } else if (EXCEL_FIELD_VALID_COL === $key && empty($val)) {
+                continue 2;
+            } else if (isset($fields[$key])) {
+                $tmpFields[$fields[$key]] = $val;
+            }
+        }
+
+        if (count($tmpFields)) {
+            $data[] = $tmpFields;
+        }
+    }
+    if (!count($data)) {
+        output(-1, '解析数据为空！');
+    }
+    /*echo '<pre>';
+    print_r($data);die;*/
+
+    return $data;
 }
 
 
