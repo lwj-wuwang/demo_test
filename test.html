@@ -5,14 +5,36 @@
     <title>Title</title>
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript" src="jquery-1.6.2.min.js"></script>
-    <script>
-        function click_me(){
-//            alert("aa");
-            $("#close_me").hide();
-        }
-    </script>
 </head>
 <body>
-    <div id="close_me" onclick="click_me()">点击测试</div>
+    <table>
+        <tr>
+            <th>序号</th>
+            <th>告警内容</th>
+            <th>告警时间</th>
+            <th>告警次数</th>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+    </table>
 </body>
 </html>
+<script>
+    var WebHostURL = "http://cs.37jy.com/demo_test/api_test/api.php";
+    setInterval(function(){
+        getWarn();
+    },10000);
+
+    function getWarn(){
+        $.ajax({
+            "url":WebHostURL,
+            "type":'post',
+            "dataType":'json',
+            "data":{'action': "upload_data"},
+            success:function(data){
+                console.log(data);
+            }
+        });
+    }
+</script>
