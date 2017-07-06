@@ -109,10 +109,10 @@ EOF;
 }
 
 
-$testOb = new ApiTest();
+/*$testOb = new ApiTest();
 $res = $testOb->UploadData();
 print_r(json_decode($res,true));
-die;
+die;*/
 
 $raw_input = file_get_contents('php://input');
 $resolved_body = Util::resolveBody($raw_input);
