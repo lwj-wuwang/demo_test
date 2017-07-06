@@ -35,6 +35,10 @@ class ApiTest{
 
         $data   = $this->AnalogData();
         $result = $this->_oneOb->datapoint_add($this->_devId,$this->_datastreams,$data);
+        echo '<pre>';
+        print_r($result);
+        echo '</pre>';
+        die;
         if(!$result){//数据上传错误时，尝试多次上传，排除异常，否则告警
             $errorNum = 0;
             for($i=0;$i<5;$i++){

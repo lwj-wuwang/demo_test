@@ -44,6 +44,7 @@ if($_GET['debug']){
     echo '<pre>';
     print_r($Json);
     echo '</pre>';
+    die;
 }
 
 
