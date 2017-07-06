@@ -114,7 +114,7 @@ $res = $testOb->UploadData();
 print_r(json_decode($res,true));
 die;*/
 
-$raw_input = file_get_contents('php://input');
+/*$raw_input = file_get_contents('php://input');
 $resolved_body = Util::resolveBody($raw_input);
 file_put_contents('./data.txt',print_r($resolved_body),FILE_APPEND);
-die;
+die;*/
