@@ -9,7 +9,8 @@ header("Content-type: text/html; charset=utf-8");
 date_default_timezone_set('Asia/Chongqing');
 
 
-define("MASTER_KEY","8D=h5AFr8ueFS8XWX4=o=L7u9M4=");    //产品APIKey
+//define("MASTER_KEY","8D=h5AFr8ueFS8XWX4=o=L7u9M4=");    //产品APIKey
+define("MASTER_KEY","j29Msh=PJ6cReT0sLoHnehqu13I=");    //兴源 产品APIKey
 define("PROTOCOL","EDP");                               //接入协议
 //define('token','test123');                              //token验证
 
@@ -19,8 +20,8 @@ include_once "./Onepush/util.php";
 class ApiTest{
     protected $_key;
     protected $_oneOb;
-    protected $_devId       = 7480650;
-    protected $_datastreams = 'testdata';
+    protected $_devId       = 8257177;//7480650;
+    protected $_datastreams = 'voltage';//'testdata';
 
     function __construct(){
         $this->_key = MASTER_KEY;
@@ -33,7 +34,9 @@ class ApiTest{
         $json['status'] = false;
         $json['error']  = '上传数据成功';
 
-        $data   = $this->AnalogData();
+//        $data   = $this->AnalogData();
+        $time = time();
+        $data[$time]    = 12;
         $result = $this->_oneOb->datapoint_add($this->_devId,$this->_datastreams,$data);
 
         if(!$result){//数据上传错误时，尝试多次上传，排除异常，否则告警
