@@ -45,7 +45,7 @@ $devLists = parse_movie_excel($files);*/
         }
     }
 }*/
-$date = '2017-06-07';
+$date = '2017-07-06';
 
 $oneClass = new OneNetApi(MASTER_KEY, API_URL);
 $devArr   = $oneClass->device_list(1, 100,null,null,null,null,null,null,$date,$date);
