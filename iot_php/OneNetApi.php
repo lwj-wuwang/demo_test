@@ -248,6 +248,9 @@ class OneNetApi
                 )
             )
         );
+
+        echo '<pre>';
+        print_r($api_data);die;
         $api = "/devices/{$device_id}/datapoints";
         return $this->_call($api, 'POST', $api_data);
     }
