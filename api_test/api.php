@@ -27,7 +27,7 @@ if( empty($action) ){
 
 switch($action){
     case 'upload_data':
-        echo 111;die;
+//        echo 111;die;
         $Json = $testClass   ->UploadData();
 //        return $res;
         break;
