@@ -58,7 +58,7 @@ class ApiTest{
             */
         }
 
-        return json_encode($json);
+        return $json;
 
     }
 

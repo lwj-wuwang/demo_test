@@ -33,6 +33,7 @@
             "dataType":'json',
             "data":{'action': "upload_data"},
             success:function(data){
+                data = $.parseJSON(data);
                 console.log(data);
             }
         });
