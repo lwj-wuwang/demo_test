@@ -9,10 +9,13 @@ header("Content-type: text/html; charset=utf-8");
 date_default_timezone_set('Asia/Chongqing');
 require_once "./Onepush/util.php";
 
-file_put_contents('./data_1.txt',print_r($GLOBALS['HTTP_RAW_POST_DATA'], TRUE),FILE_APPEND);
+//file_put_contents('./data_1.txt',print_r($GLOBALS['HTTP_RAW_POST_DATA'], TRUE),FILE_APPEND);
 //file_put_contents("./data.txt", print_r($GLOBALS['HTTP_RAW_POST_DATA'], TRUE), FILE_APPEND);die;
+//$GLOBALS['HTTP_RAW_POST_DATA'] = "{\"msg\":[{\"at\":1499742990554,\"type\":1,\"ds_id\":\"red_statu\",\"value\":\"0\",\"dev_id\":5246392},{\"at\":1499743010530,\"type\":1,\"ds_id\":\"red_statu\",\"value\":\"0\",\"dev_id\":5246392},{\"at\":1499743010530,\"type\":1,\"ds_id\":\"red_statu\",\"value\":\"0\",\"dev_id\":5246392},{\"at\":1499743010530,\"type\":1,\"ds_id\":\"red_statu\",\"value\":\"0\",\"dev_id\":5246392},{\"at\":1499743010530,\"type\":1,\"ds_id\":\"red_statu\",\"value\":\"0\",\"dev_id\":5246392},{\"at\":1499743010530,\"type\":1,\"ds_id\":\"red_statu\",\"value\":\"0\",\"dev_id\":5246392},{\"at\":1499743010531,\"type\":1,\"ds_id\":\"red_statu\",\"value\":\"0\",\"dev_id\":5246392},{\"at\":1499743010531,\"type\":1,\"ds_id\":\"red_statu\",\"value\":\"0\",\"dev_id\":5246392},{\"at\":1499743010531,\"type\":1,\"ds_id\":\"red_statu\",\"value\":\"0\",\"dev_id\":5246392},{\"at\":1499743010531,\"type\":1,\"ds_id\":\"red_statu\",\"value\":\"0\",\"dev_id\":5246392}],\"msg_signature\":\"uO9S4bsLUDdjoV//RgRGAQ==\",\"nonce\":\"34OGir&7\"}";
 $raw_input = json_decode($GLOBALS['HTTP_RAW_POST_DATA'],true);
-file_put_contents('./data_2.txt',print_r($resolved_body,true),FILE_APPEND);
+/*echo '<pre>';
+print_r($raw_input);die;*/
+file_put_contents('./data_3.txt',print_r($raw_input,true),FILE_APPEND);
 //$raw_input = file_get_contents('php://input');
 $resolved_body = Util::resolveBody($raw_input);
 file_put_contents('./data.txt',print_r($resolved_body),FILE_APPEND);
