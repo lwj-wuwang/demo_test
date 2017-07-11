@@ -53,7 +53,7 @@ class ApiTest{
             $json['status'] = true;
             $json['error']  = '';
             $json['data']   = array(
-                'times'     => time(),
+                'times'     => date("Y-m-d H:i:s"),
                 'errorNum'  => $errorNum
             );
 

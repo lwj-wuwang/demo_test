@@ -5,23 +5,36 @@
     <title>Title</title>
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript" src="jquery-1.6.2.min.js"></script>
+    <style type="text/css">
+        .sub{text-align: center;font-size: 22px;margin-bottom: 30px;}
+        .warn_num{color: red;}
+        .warn_list{text-align: center;}
+        .tab{margin: auto;}
+    </style>
 </head>
 <body>
-    <table>
-        <tr>
-            <th>序号</th>
-            <th>告警内容</th>
-            <th>告警时间</th>
-            <th>告警次数</th>
-        </tr>
-        <tr>
-            <td></td>
-        </tr>
-    </table>
+    <div class="sub">平台告警提醒</div>
+    <div>
+        <table class="tab" border="1 solid #000" cellpadding="10px" cellspacing="0" width="1000px">
+            <tr class="title">
+                <th>序号</th>
+                <th>告警内容</th>
+                <th>告警时间</th>
+                <th>告警次数</th>
+            </tr>
+            <!--<tr class="warn_list">
+                <td>1</td>
+                <td>数据上传</td>
+                <td>2017-07-07 14:21:20</td>
+                <td class="warn_num">5</td>
+            </tr>-->
+        </table>
+    </div>
 </body>
 </html>
 <script>
     var WebHostURL = "http://cs.37jy.com/demo_test/api_test/api.php";
+    var Num        = 0;
     setInterval(function(){
         getWarn();
     },60000);
@@ -33,9 +46,32 @@
             "dataType":'json',
             "data":{'action': "upload_data"},
             success:function(data){
-                data = $.parseJSON(data);
-                console.log(data);
+//                console.log(data);
+                if(data.status){
+                    Num +=1;
+                    $(".title").append("<tr class='warn_list'><td>"+Num+"</td><td>数据上传失败</td><td>"+data.data.times+"</td><td class='warn_num'>"+data.data.errorNum+"</td></tr>");
+                }
             }
         });
     }
+
+    function UnixToDate(unixTime, isFull, timeZone) {
+        if (typeof (timeZone) == 'number'){
+            unixTime = parseInt(unixTime) + parseInt(timeZone) * 60 * 60;
+        }
+        var time = new Date(unixTime * 1000);
+        var ymdhis = "";
+        ymdhis += time.getUTCFullYear() + "-";
+        ymdhis += (time.getUTCMonth()+1) + "-";
+        ymdhis += time.getUTCDate();
+        if (isFull === true){
+            ymdhis += " " + time.getUTCHours() + ":";
+            ymdhis += time.getUTCMinutes() + ":";
+            ymdhis += time.getUTCSeconds();
+        }
+        return ymdhis;
+    }
+
+   /* var time = UnixToDate('1481517030','Y-m-d');
+    alert(time);*/
 </script>
