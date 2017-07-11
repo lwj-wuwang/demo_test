@@ -15,4 +15,4 @@ file_put_contents("./data.txt", print_r($GLOBALS['HTTP_RAW_POST_DATA'], TRUE), F
 
 $raw_input = $GLOBALS['HTTP_RAW_POST_DATA'];
 $resolved_body = Util::resolveBody($raw_input);
-file_put_contents('./data.txt',print_r($resolved_body),FILE_APPEND);die;
+file_put_contents('./data_1.txt',print_r($resolved_body),FILE_APPEND);die;
