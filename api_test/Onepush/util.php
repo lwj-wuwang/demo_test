@@ -85,7 +85,7 @@ class Util
     public static function resolveBody($body)
     {
         $body = json_decode($body, TRUE);
-        
+
         if (isset($body['enc_msg'])) {
             return self::_decryptMsg($body['enc_msg'], self::$encodekey);
         } elseif (! isset($body['msg'])) {
