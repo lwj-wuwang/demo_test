@@ -11,7 +11,8 @@ require_once "./Onepush/util.php";
 
 
 //file_put_contents("./data.txt", print_r($GLOBALS['HTTP_RAW_POST_DATA'], TRUE), FILE_APPEND);die;
-$body = json_decode($GLOBALS['HTTP_RAW_POST_DATA'],true);
-$raw_input = file_get_contents('php://input');
+$raw_input = json_decode($GLOBALS['HTTP_RAW_POST_DATA'],true);
+file_put_contents('./data_2.txt',print_r($resolved_body),FILE_APPEND);
+//$raw_input = file_get_contents('php://input');
 $resolved_body = Util::resolveBody($raw_input);
 file_put_contents('./data.txt',print_r($resolved_body),FILE_APPEND);
