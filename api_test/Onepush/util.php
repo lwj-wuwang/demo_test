@@ -52,6 +52,7 @@ class Util
         $new_sig = md5($token . $body['nonce'] . json_encode($body['msg']));
         $new_sig = rtrim(base64_encode(pack('H*', strtoupper($new_sig))),'=');
         if ($new_sig == rtrim($body['msg_signature'],'=')) {
+            file_put_contents('./api_bodu.txt',print_r($body),FILE_APPEND);
             return $body['msg'];
         } else {
             return FALSE;
@@ -85,7 +86,8 @@ class Util
     public static function resolveBody($body)
     {
         $body = json_decode($body, TRUE);
-
+        echo '<pre>';
+        print_r($body);
         if (isset($body['enc_msg'])) {
             return self::_decryptMsg($body['enc_msg'], self::$encodekey);
         } elseif (! isset($body['msg'])) {
