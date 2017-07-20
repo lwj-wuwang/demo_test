@@ -15,6 +15,7 @@ require_once "./Onepush/util.php";
 
 //$raw_input = $GLOBALS['HTTP_RAW_POST_DATA'];
 $raw_input = "{\"msg\":{\"at\":1500522457012,\"login_type\":1,\"type\":2,\"dev_id\":5246392,\"status\":0},\"msg_signature\":\"s9czc1WEx0oeI1GNx63t6g==\",\"nonce\":\"T!&&@T$2\"}";
-file_put_contents("./data.txt", print_r($raw_input, TRUE).PHP_EOL, FILE_APPEND);
+file_put_contents("./data.txt", print_r($raw_input,true).PHP_EOL, FILE_APPEND);
+//$raw_input = json_decode($raw_input, TRUE);
 $resolved_body = Util::resolveBody($raw_input);
-file_put_contents('./data_1.txt',print_r($resolved_body).PHP_EOL,FILE_APPEND);die;
+file_put_contents('./data_1.txt',print_r($resolved_body,true).PHP_EOL,FILE_APPEND);die;

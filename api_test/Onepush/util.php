@@ -34,7 +34,6 @@ class Util
      */
     protected static function _checkSignature($body, $token)
     {
-        file_put_contents('./api_msg.txt',"信息摘要".print_r($body).PHP_EOL,FILE_APPEND);
         $new_sig = md5($token . $body['nonce'] . $body['msg']);
         $new_sig = rtrim(str_replace('+', ' ', base64_encode(pack('H*', strtoupper($new_sig)))),'=');
         if ($new_sig == rtrim($body['signature'],'=')) {
@@ -53,7 +52,7 @@ class Util
         $new_sig = md5($token . $body['nonce'] . json_encode($body['msg']));
         $new_sig = rtrim(base64_encode(pack('H*', strtoupper($new_sig))),'=');
         if ($new_sig == rtrim($body['msg_signature'],'=')) {
-            file_put_contents('./api_body.txt',print_r($body).PHP_EOL,FILE_APPEND);
+            file_put_contents('./api_body.txt',print_r($body,true).PHP_EOL,FILE_APPEND);
             return $body['msg'];
         } else {
             return FALSE;
@@ -68,7 +67,6 @@ class Util
      */
     protected static function _decryptMsg($body, $encodeKey)
     {
-        file_put_contents('./api_msg.txt',"解密信息".print_r($body).PHP_EOL,FILE_APPEND);
         $enc_msg = base64_decode($body);
         $aes_key = base64_decode($encodeKey . '=');
         $secure_key = substr($aes_key, 0, 32);
@@ -87,9 +85,9 @@ class Util
      */
     public static function resolveBody($body)
     {
-        file_put_contents('./api_body_data.txt',print_r($body).PHP_EOL,FILE_APPEND);
+        file_put_contents('./api_body_data.txt',print_r($body,true).PHP_EOL,FILE_APPEND);
         $body = json_decode($body, TRUE);
-        file_put_contents('./api_body_resolve.txt',print_r($body).PHP_EOL,FILE_APPEND);
+        file_put_contents('./api_body_resolve.txt',print_r($body,true).PHP_EOL,FILE_APPEND);
         if (isset($body['enc_msg'])) {
             return self::_decryptMsg($body['enc_msg'], self::$encodekey);
         } elseif (! isset($body['msg'])) {
