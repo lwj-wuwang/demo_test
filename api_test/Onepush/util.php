@@ -9,7 +9,7 @@
 class Util
 {
 
-    public static $token = 'test123';//'把token填在这里/Put your token here';
+    public static $token = 'apitest123';//'把token填在这里/Put your token here';
 
     public static $encodekey = '';//'如果用到了数据加密，将密钥填在这里/Filling in the key here if you are using data encryption';
 
