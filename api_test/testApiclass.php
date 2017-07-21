@@ -65,7 +65,7 @@ class ApiTest{
     }
 
 
-    function getPushData($body){
+   /* function getPushData($body){
         if(empty($body)){
             $json['status'] = true;
             $json['error']  = '参数错误';
@@ -87,7 +87,7 @@ class ApiTest{
         }
 
         return $json;
-    }
+    }*/
 
 
     //模拟数据

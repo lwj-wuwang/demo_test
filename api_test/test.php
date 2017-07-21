@@ -8,19 +8,17 @@
 header("Content-type: text/html; charset=utf-8");
 date_default_timezone_set('Asia/Chongqing');
 require_once "./Onepush/util.php";
-require_once "../config.php";
-require_once "../model.php";
 
 
 
 $raw_input = $GLOBALS['HTTP_RAW_POST_DATA'];
-$raw_input   = " {\"msg\": [{\"type\": 1,\"dev_id\": 2016617,\"ds_id\": \"datastream_id\",\"at\": 1466133706841,\"value\": 42},{\"type\": 1,\"dev_id\": 2016617,\"ds_id\": \"datastream_id\",\"at\": 1466133706842, \"value\":43}],\"msg_signature\": \"message signature\",\"nonce\": \"abcdefgh\"}";
+//$raw_input   = " {\"msg\": [{\"type\": 1,\"dev_id\": 2016617,\"ds_id\": \"datastream_id\",\"at\": 1466133706841,\"value\": 42},{\"type\": 1,\"dev_id\": 2016617,\"ds_id\": \"datastream_id\",\"at\": 1466133706842, \"value\":43}],\"msg_signature\": \"message signature\",\"nonce\": \"abcdefgh\"}";
 file_put_contents("./data.txt", print_r($raw_input,true).PHP_EOL, FILE_APPEND);
 
 $resolved_body = Util::resolveBody($raw_input);
 file_put_contents('./data_1.txt',print_r($resolved_body,true).PHP_EOL,FILE_APPEND);//die;
 
-$tableClass = new table();
+//$tableClass = new table();
 
 if(!empty($resolved_body)){
     /*if($resolved_body['type'] == 2){ //设备上线

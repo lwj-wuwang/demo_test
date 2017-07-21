@@ -34,9 +34,9 @@ switch($action){
         break;
 
     //推送数据
-    case 'get_push_data':
+    /*case 'get_push_data':
         $Json = $testClass   ->getPushData($raw_input);
-        break;
+        break;*/
 
     default:
         $Json['status']     = false;

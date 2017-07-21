@@ -34,6 +34,7 @@
 </html>
 <script>
     var WebHostURL = "http://cs.37jy.com/demo_test/api_test/api.php";
+    var WebPushUrl = "http://cs.37jy.com/demo_test/api_test/test.php";
     var Num        = 0;
     setInterval(function(){
         getUploadDataWarn();
@@ -58,10 +59,10 @@
 
     function getPushDataWarn(){
         $.ajax({
-            "url":WebHostURL,
+            "url":WebPushUrl,
             "type":'post',
             "dataType":'json',
-            "data":{'action': "get_push_data"},
+            //"data":{'action': "get_push_data"},
             success:function(data){
                 console.log(data);
                 if(data.status){
