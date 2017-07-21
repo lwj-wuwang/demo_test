@@ -35,8 +35,6 @@ class ApiTest{
         $json['error']  = '上传数据成功';
 
         $data   = $this->AnalogData();
-//        $time = time();
-//        $data[$time]    = 12;
         $result = $this->_oneOb->datapoint_add($this->_devId,$this->_datastreams,$data);
 
         if(!$result){//数据上传错误时，尝试多次上传，排除异常，否则告警
@@ -64,6 +62,31 @@ class ApiTest{
 
         return $json;
 
+    }
+
+
+    function getPushData($body){
+        if(empty($body)){
+            $json['status'] = true;
+            $json['error']  = '参数错误';
+            $json['data']   = array(
+                'times'     => date("Y-m-d H:i:s")
+            );
+            return $json;
+        }
+        $resolved_body = Util::resolveBody($body);
+        if($resolved_body){
+            $json['status'] = false;
+            $json['error']  = '接收推送数据成功';
+        }else{
+            $json['status'] = true;
+            $json['error']  = '';
+            $json['data']   = array(
+                'times'     => date("Y-m-d H:i:s")
+            );
+        }
+
+        return $json;
     }
 
 

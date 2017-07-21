@@ -85,7 +85,6 @@ class Util
      */
     public static function resolveBody($body)
     {
-        file_put_contents('./api_body_data.txt',print_r($body,true).PHP_EOL,FILE_APPEND);
         $body = json_decode($body, TRUE);
         file_put_contents('./api_body_resolve.txt',print_r($body,true).PHP_EOL,FILE_APPEND);
         if (isset($body['enc_msg'])) {

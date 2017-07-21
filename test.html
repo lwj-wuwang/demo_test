@@ -36,10 +36,11 @@
     var WebHostURL = "http://cs.37jy.com/demo_test/api_test/api.php";
     var Num        = 0;
     setInterval(function(){
-        getWarn();
+        getUploadDataWarn();
+        getPushDataWarn();
     },60000);
 
-    function getWarn(){
+    function getUploadDataWarn(){
         $.ajax({
             "url":WebHostURL,
             "type":'post',
@@ -54,6 +55,23 @@
             }
         });
     }
+
+    function getPushDataWarn(){
+        $.ajax({
+            "url":WebHostURL,
+            "type":'post',
+            "dataType":'json',
+            "data":{'action': "get_push_data"},
+            success:function(data){
+                console.log(data);
+                if(data.status){
+                    Num +=1;
+                    $(".title").append("<tr class='warn_list'><td>"+Num+"</td><td>推送数据失败</td><td>"+data.data.times+"</td><td class='warn_num'></td></tr>");
+                }
+            }
+        });
+    }
+
 
     function UnixToDate(unixTime, isFull, timeZone) {
         if (typeof (timeZone) == 'number'){
