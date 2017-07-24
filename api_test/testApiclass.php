@@ -15,7 +15,7 @@ define("PROTOCOL","EDP");                               //接入协议
 //define('token','test123');                              //token验证
 
 include_once "../iot_php/OneNetApi.php";
-include_once "./api_test/Onepush/util.php";
+include_once "./Onepush/util.php";
 
 class ApiTest{
     protected $_key;
