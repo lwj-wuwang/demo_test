@@ -8,7 +8,7 @@
 
 $config = array(
     'db_host'  => 'localhost',
-    'db_name'  => 'onenettable',
+    'db_name'  => 'onenet_demo',
     'db_username' => 'root',
     'db_password' => 'root'
 
