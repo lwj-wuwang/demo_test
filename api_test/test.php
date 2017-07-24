@@ -27,9 +27,10 @@ if(!empty($resolved_body)){
     }*/
     $json['status'] = false;
     $json['data']   = $resolved_body;
+    $json['error']  = '推送数据成功';
     exit(json_encode($json));
 }else{
     $json['status'] = true;
-    $json['time']   = date("Y-m-d H:i:s");
+    $json['times']   = date("Y-m-d H:i:s");
     exit(json_encode($json));
 }
