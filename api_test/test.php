@@ -16,9 +16,10 @@ $raw_input = $GLOBALS['HTTP_RAW_POST_DATA'];
 file_put_contents("./data.txt", print_r($raw_input,true).PHP_EOL, FILE_APPEND);
 
 $resolved_body = Util::resolveBody($raw_input);
-file_put_contents('./data_1.txt',print_r($resolved_body,true).PHP_EOL,FILE_APPEND);//die;
+file_put_contents('./data_1.txt',print_r($resolved_body,true).PHP_EOL,FILE_APPEND);//
 
 //$tableClass = new table();
+print_r($resolved_body);die;
 
 if(!empty($resolved_body)){
     /*if($resolved_body['type'] == 2){ //设备上线
