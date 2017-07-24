@@ -19,7 +19,7 @@ $resolved_body = Util::resolveBody($raw_input);
 file_put_contents('./data_1.txt',print_r($resolved_body,true).PHP_EOL,FILE_APPEND);//
 
 
-if(!empty($resolved_body)){
+if(empty($resolved_body)){
     /*if($resolved_body['type'] == 2){ //设备上线
         $resolved_body['status'] =0;
     }elseif($resolved_body['type'] == 1){//数据流信息
