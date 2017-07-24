@@ -8,10 +8,10 @@
 include_once "/config.php";
 class table{
     protected $_link;
-    function __construct(){
-        $this->_link = mysql_connect(DB_HOST,DB_USERNAME,DB_PASSWORD);
+    function __construct($config){
+        $this->_link = mysql_connect($config['db_host'],$config['db_username'],$config['db_password']);//mysqli_connect($config['db_host'], $config['db_name'],$config['db_username'],$config['db_password']);
         mysql_query("set names 'utf8'",$this->_link);
-        mysql_select_db(DB_NAME,$this->_link);
+        mysql_select_db($config['db_name'],$this->_link);
     }
 
     function insert($table,$data){
