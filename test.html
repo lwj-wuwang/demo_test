@@ -51,7 +51,7 @@
 //                console.log(data);
                 if(data.status){
                     Num +=1;
-                    $(".title").append("<tr class='warn_list'><td>"+Num+"</td><td>数据上传失败</td><td>"+data.data.times+"</td><td class='warn_num'>"+data.data.errorNum+"</td></tr>");
+                    $(".title").insertBefore("<tr class='warn_list'><td>"+Num+"</td><td>数据上传失败</td><td>"+data.data.times+"</td><td class='warn_num'>"+data.data.errorNum+"</td></tr>");
                 }
             }
         });
@@ -67,7 +67,7 @@
                 console.log(data);
                 if(data.status){
                     Num +=1;
-                    $(".title").append("<tr class='warn_list'><td>"+Num+"</td><td>推送数据失败</td><td>"+data.data.times+"</td><td class='warn_num'></td></tr>");
+                    $(".title").insertBefore("<tr class='warn_list'><td>"+Num+"</td><td>推送数据失败</td><td>"+data.data.times+"</td><td class='warn_num'></td></tr>");
                 }
             }
         });
