@@ -29,7 +29,7 @@ class table{
     }
 
     function update($table,$data,$where){
-        if(empty($table) || empty($data)){
+        if(empty($table) || empty($data) || empty($where)){
             return false;
         }
         $char = '';
