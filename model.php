@@ -64,10 +64,12 @@ class table{
         $limit  = empty($limit)  ? ''   : ' LIMIT ' . $limit;
         $SQL    = "SELECT ".$field . " FROM " . $table ." WHERE 1=1 " . $where . $order . $limit;
         $query  = mysql_query($SQL,$this->_link);
-        $rows   = mysql_fetch_assoc($query);
-        /*while($row = mysql_fetch_assoc($query){
+
+        $rows   = array();
+        while($row  = mysql_fetch_assoc($query)){
             $rows[] = $row;
-        }*/
+        }
+
         return $rows;
 
     }

@@ -45,7 +45,7 @@ if(!empty($resolved_body)){
 }else{
     $json['status'] = true;
     $json['data']   = array(
-            'times' => date("Y-m-d H:i:s")
+        'times' => date("Y-m-d H:i:s")
     );
     exit(json_encode($json));
 }
