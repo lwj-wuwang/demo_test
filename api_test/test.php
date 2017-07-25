@@ -41,7 +41,8 @@ if(empty($resolved_body)){
     );
 
     $insert_id = $tableClass->insert('dev_error',$data);
-    exit;
+
+
 
     //短信报警提醒
     $data_info = "数据为空";
