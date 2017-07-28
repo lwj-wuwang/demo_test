@@ -204,10 +204,60 @@ function parse_movie_excel($file)
     if (!count($data)) {
         output(-1, '解析数据为空！');
     }
-    /*echo '<pre>';
-    print_r($data);die;*/
 
     return $data;
+}
+
+
+function parse_test_excel($file){
+
+    global $bookFields;
+
+    if (!file_exists($file)) {
+        output(-1, '“' . basename($file) . '” 文件不存在！');
+    }
+    set_time_limit(0);
+    ini_set("memory_limit", "1024M");
+    $objPHPExcel = PHPExcel_IOFactory::load($file);
+
+    $data = $fields = array();
+
+    $currentSheet = $objPHPExcel->getSheet(0); // 当前页
+    $maxRow       = $currentSheet->getHighestRow();// 当前页行数 最大行数
+    $maxCol       = $currentSheet->getHighestColumn(); // 当前页最大列
+
+    if($maxCol != 'L'){
+        return false;
+    }
+
+    for ($row = EXCEL_FIELD_ROW; $row <= $maxRow; $row++) {
+        $rowData = $currentSheet->rangeToArray('A' . $row . ':' . $maxCol . $row, FALSE, FALSE, FALSE);
+        $tmpFields = array();
+        foreach($rowData[0] as $key=>$val){
+            if (EXCEL_FIELD_ROW === $row) {
+                $field = array_search($val, $bookFields);
+                if ($field) {
+                    $fields[$key] = $field;
+                }
+            }else if (EXCEL_FIELD_VALID_COL === $key && empty($val)) {
+                continue 2;
+            }else if (isset($fields[$key])) {
+                $tmpFields[$fields[$key]] = $val;
+            }
+        }
+
+        if (count($tmpFields)) {
+            $data[] = $tmpFields;
+        }
+
+    }
+
+    if (!count($data)) {
+        output(-1, '解析数据为空！');
+    }
+
+   return $data;
+
 }
 
 
