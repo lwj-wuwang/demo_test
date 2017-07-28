@@ -20,9 +20,10 @@ $raw_input = $GLOBALS['HTTP_RAW_POST_DATA'];
 
 $resolved_body = Util::resolveBody($raw_input);
 if(!empty($resolved_body)){
-    file_put_contents('./data.txt',print_r($resolved_body,true).PHP_EOL,FILE_APPEND);
+    
     if($resolved_body['type'] == 2){
         $resolved_body['at'] = date('Y-m-d H:i:s',$resolved_body['at']);
+
     }else{
         foreach($resolved_body as $key => $val){
             $resolved_body[$key]['at'] = date('Y-m-d H:i:s',$val['at']);
