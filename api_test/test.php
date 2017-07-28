@@ -25,7 +25,7 @@ if(!empty($resolved_body)){
         $resolved_body['at'] = date('Y-m-d H:i:s',$resolved_body['at']);
     }else{
         foreach($resolved_body as $key => $val){
-            $val['at'] = date('Y-m-d H:i:s',$val['at']);
+            $resolved_body[$key]['at'] = date('Y-m-d H:i:s',$val['at']);
         }
     }
     file_put_contents('./data_1.txt',date('Y-m-d H:i:s').print_r('开始打印',true).PHP_EOL,FILE_APPEND);
