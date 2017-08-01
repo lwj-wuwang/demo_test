@@ -117,7 +117,7 @@ class OneNetApi
             $params_str = $params_str . '&online=true';
         }
 
-        
+
         $api = '/devices?' . $params_str;
 
 //        echo $api;die;

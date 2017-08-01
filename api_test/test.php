@@ -16,11 +16,12 @@ require_once '../iot_php/OneNetApi.php';
 require_once "../func.php";
 
 
-$raw_input = $GLOBALS['HTTP_RAW_POST_DATA'];
+//$raw_input = $GLOBALS['HTTP_RAW_POST_DATA'];
+$raw_input = file_get_contents('php://input');
 
 $resolved_body = Util::resolveBody($raw_input);
 if(!empty($resolved_body)){
-    
+
     if($resolved_body['type'] == 2){
         $resolved_body['at'] = date('Y-m-d H:i:s',$resolved_body['at']);
 
@@ -40,7 +41,7 @@ if(empty($resolved_body)){
     $dev_id  = '10072873';
     $apikey  = "OyvIPHO=yBK5p=h1sok0vDbRsKE=";
 
-    $oneOb   = new OneNetApi($apikey, $apiurl);
+    $oneOb   = new OneNetApi($apikey);
     $dataArr = $oneOb ->device($dev_id);
 
     $reason = 0;
