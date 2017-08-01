@@ -85,9 +85,12 @@ class Util
     public static function resolveBody($body)
     {
         $body = json_decode($body, TRUE);
+
         if (isset($body['enc_msg'])) {
+            file_put_contents('./data.txt',date('Y-m-d H:i:s').'提交验证enc_msg'.print_r($body,true).PHP_EOL,FILE_APPEND);
             return self::_decryptMsg($body['enc_msg'], self::$encodekey);
         } elseif (! isset($body['msg'])) {
+            file_put_contents('./data.txt',date('Y-m-d H:i:s').'提交验证msg'.print_r($body,true).PHP_EOL,FILE_APPEND);
             if (isset($_GET['msg']) && isset($_GET['signature']) && isset($_GET['nonce'])) {
                 return self::_checkSignature($_GET, self::$token);
             } else {

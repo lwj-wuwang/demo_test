@@ -19,13 +19,13 @@ $result    = get_html($get_url);
 file_put_contents('./test.txt',print_r($result,true).PHP_EOL,FILE_APPEND);
 $result    = json_decode($result,true);*/
 
-$apikey = 'j29Msh=PJ6cReT0sLoHnehqu13I=';
+/*$apikey = 'j29Msh=PJ6cReT0sLoHnehqu13I=';
 $apiurl = 'http://api.heclouds.com';
 $oneOb = new OneNetApi($apikey, $apiurl);
 
 $listdata = $oneOb->device_list(1,30,"0x0000001609004900");
 
-debug($listdata);
+debug($listdata);*/
 
 
 ?>
