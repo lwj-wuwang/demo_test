@@ -36,9 +36,12 @@ class Util
     {
         $new_sig = md5($token . $body['nonce'] . $body['msg']);
         $new_sig = rtrim(str_replace('+', ' ', base64_encode(pack('H*', strtoupper($new_sig)))),'=');
+        file_put_contents('./body.txt',date('Y-m-d H:i:s').'提交验证check'.print_r($new_sig,true).PHP_EOL,FILE_APPEND);
         if ($new_sig == rtrim($body['signature'],'=')) {
+            file_put_contents('./body.txt',date('Y-m-d H:i:s').'提交验证返回mag'.print_r($body['msg'],true).PHP_EOL,FILE_APPEND);
             return $body['msg'];
         } else {
+            file_put_contents('./body.txt',date('Y-m-d H:i:s').'提交验证失败'.print_r('fail',true).PHP_EOL,FILE_APPEND);
             return FALSE;
         }
     }
