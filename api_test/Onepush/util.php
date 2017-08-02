@@ -84,6 +84,7 @@ class Util
      */
     public static function resolveBody($body)
     {
+        file_put_contents('./body.txt',date('Y-m-d H:i:s').'提交验证body'.print_r($body,true).PHP_EOL,FILE_APPEND);
         $body = json_decode($body, TRUE);
 
         if (isset($body['enc_msg'])) {
