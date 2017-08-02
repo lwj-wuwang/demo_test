@@ -34,6 +34,7 @@ $rowsArr = $tabeClass->getList('dev_error','*','','id desc');
             <th>序号</th>
             <th>告警内容</th>
             <th>告警时间</th>
+            <th>告警原因</th>
             <!--<th>告警次数</th>-->
         </tr>
         <?php foreach($rowsArr as $key =>$val){   ?>
@@ -41,6 +42,7 @@ $rowsArr = $tabeClass->getList('dev_error','*','','id desc');
             <td><?php echo $val['id']; ?></td>
             <td><?php if($val['error_type'] == '1'){ echo '数据推送';} elseif($val['error_type'] == '2'){ echo '数据上传';}  ?></td>
             <td><?php echo date("Y-m-d H:i:s",$val['errorTime']); ?></td>
+            <td><?php if($val['reason'] == 1){echo '设备已离线';}else{echo '数据为空';} ?></td>
             <!--<td class="warn_num">5</td>-->
         </tr>
         <?php  }  ?>

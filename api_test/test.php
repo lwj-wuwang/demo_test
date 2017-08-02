@@ -7,7 +7,7 @@
  */
 error_reporting(E_ALL ^ E_DEPRECATED);
 
-header("Content-type: text/html; charset=utf-8");
+header("Content-type:text/html; charset=utf-8");
 date_default_timezone_set('Asia/Chongqing');
 require_once "./Onepush/util.php";
 require_once "./table_config.php";
