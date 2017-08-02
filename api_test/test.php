@@ -23,16 +23,16 @@ $resolved_body = Util::resolveBody($raw_input);
 if(!empty($resolved_body)){
 
     if($resolved_body['type'] == 2){
-        $resolved_body['at'] = date('Y-m-d H:i:s',$resolved_body['at']);
+        $resolved_body['at'] = date('Y-m-d H:i:s',$resolved_body['at']/1000);
 
     }else{
         foreach($resolved_body as $key => $val){
-            $resolved_body[$key]['at'] = date('Y-m-d H:i:s',$val['at']);
+            $resolved_body[$key]['at'] = date('Y-m-d H:i:s',$val['at']/1000);
         }
     }
-    file_put_contents('./data_1.txt',date('Y-m-d H:i:s').print_r('开始打印',true).PHP_EOL,FILE_APPEND);
-    file_put_contents('./data_1.txt',print_r($resolved_body,true).PHP_EOL,FILE_APPEND);
-    file_put_contents('./data_1.txt',date('Y-m-d H:i:s').print_r('结束打印',true).PHP_EOL,FILE_APPEND);
+    file_put_contents('./data.txt',date('Y-m-d H:i:s').print_r('开始打印',true).PHP_EOL,FILE_APPEND);
+    file_put_contents('./data.txt',print_r($resolved_body,true).PHP_EOL,FILE_APPEND);
+    file_put_contents('./data.txt',date('Y-m-d H:i:s').print_r('结束打印',true).PHP_EOL,FILE_APPEND);
     die;
 }
 

@@ -27,7 +27,18 @@ $listdata = $oneOb->device_list(1,30,"0x0000001609004900");
 
 debug($listdata);*/
 
-
+date_default_timezone_set('Asia/Chongqing');
+$a = 1466133706841;
+echo date('Y-m-d H:i:s',$a/1000);
+echo '<pre>';
+echo date('Y-m-d H:i:s',1501205306522/1000);
+//echo date('Y-m-d H:i:s','15016386202803');
+echo '<pre>';
+echo date('Y-m-d H:i:s','1501636616');
+echo '<pre>';
+echo time();
+echo '<pre>';
+echo microtime(true);
 ?>
 
 
