@@ -22,7 +22,7 @@ class table{
         $keys   = "`".join("`,`",array_keys($data))."`";
         $vals   = "'" . join("','",$data ) . "'";
         $SQL    = "INSERT INTO ". $table ."({$keys}) VALUES({$vals})";
-        file_put_contents("./file.txt", "sql_".date("Y-m-d H:i:s").print_r($SQL, TRUE), FILE_APPEND);
+//        file_put_contents("./file.txt", "sql_".date("Y-m-d H:i:s").print_r($SQL, TRUE), FILE_APPEND);
         mysql_query($SQL,$this->_link);
         $insert_id = mysql_insert_id($this->_link);
         return $insert_id;
