@@ -6,6 +6,7 @@
  * Time: 10:57
  */
 header("Content-type: text/html; charset=utf-8");
+date_default_timezone_set('Asia/Chongqing');
 require_once "./func.php";
 require_once './iot_php/OneNetApi.php';
 //短信报警提醒
@@ -27,18 +28,35 @@ $listdata = $oneOb->device_list(1,30,"0x0000001609004900");
 
 debug($listdata);*/
 
-date_default_timezone_set('Asia/Chongqing');
-$a = 1466133706841;
-echo date('Y-m-d H:i:s',$a/1000);
-echo '<pre>';
-echo date('Y-m-d H:i:s',1501205306522/1000);
-//echo date('Y-m-d H:i:s','15016386202803');
-echo '<pre>';
-echo date('Y-m-d H:i:s','1501636616');
-echo '<pre>';
-echo time();
-echo '<pre>';
-echo microtime(true);
+$arr = array('a','b','c','d','e');
+$arr = array(
+    array(
+        'at'    => '2017-08-02 15:26:22',
+        'ds_id' => 'green_statu',
+        'value' => 0
+    ),
+    array(
+        'at'    => '2017-08-02 15:26:24',
+        'ds_id' => 'green_statu',
+        'value' => 0
+    ),
+    array(
+        'at'    => '2017-08-02 15:26:25',
+        'ds_id' => 'green_statu',
+        'value' => 0
+    ),
+    array(
+        'at'    => '2017-08-02 15:26:27',
+        'ds_id' => 'green_statu',
+        'value' => 0
+    ),
+);
+
+print_r(reset($arr));
+echo '<br>';
+print_r(end($arr));
+echo '<br>';
+
 ?>
 
 
