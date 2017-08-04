@@ -19,7 +19,8 @@ class table{
             return false;
         }
 
-        $keys   = join(",",array_keys($data));
+        $keys   = join("`·`",array_keys($data));
+        file_put_contents("./key.txt", "sql_".date("Y-m-d H:i:s").print_r($keys, TRUE), FILE_APPEND);
         $vals   = "'" . join("','",$data ) . "'";
         $SQL    = "INSERT INTO ". $table ."({$keys}) VALUES({$vals})";
         file_put_contents("./file.txt", "sql_".date("Y-m-d H:i:s").print_r($SQL, TRUE), FILE_APPEND);
