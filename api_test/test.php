@@ -36,6 +36,8 @@ if(!empty($resolved_body)){
 
         unset($startArr['type']);
         unset($endArr['type']);
+        file_put_contents('./arr.txt',date('Y-m-d H:i:s').'开始'.print_r($startArr,true).PHP_EOL,FILE_APPEND);
+        file_put_contents('./arr.txt',date('Y-m-d H:i:s').'结束'.print_r($endArr,true).PHP_EOL,FILE_APPEND);
         $start_res  = $tableClass->insert('data_str',$startArr);
         $end_res    = $tableClass->insert('data_str',$endArr);
 
