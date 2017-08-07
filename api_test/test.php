@@ -6,7 +6,7 @@
  * Time: 10:19
  */
 error_reporting(E_ALL ^ E_DEPRECATED);
-
+session_start();
 header("Content-type:text/html; charset=utf-8");
 date_default_timezone_set('Asia/Chongqing');
 require_once "./Onepush/util.php";
@@ -40,8 +40,49 @@ if(!empty($resolved_body)){
         $end_res    = $tableClass->insert('data_str',$endArr);
 
         foreach($resolved_body as $key => $val){
+            if($key == 0){
+                if($_SESSION[$endArr['ds_id']] ){
+                    if( ($val['at']-$_SESSION[$endArr['ds_id']]) > 3000 ){
+                        $data = array(
+                            'error_type' => '1',
+                            'errorTime'  => time(),
+                            'reason'     => 2
+                        );
+
+                        $insert_id = $tableClass->insert('dev_error',$data);
+
+                        //发送短信经过提醒
+                        $result = send_message('数据间隔过长, 可能存在丢失');
+                        if($result['result'] == '10701'){
+                            $updata = array('if_send_msg' => 1);
+                            $res    = $tableClass->update('dev_error',$updata,"id='{$insert_id}'");
+                        }
+
+                    }
+                }
+            }else{
+                if($resolved_body[$key]['at'] - $resolved_body[$key-1]['at'] > 3000 ){
+                    $data = array(
+                        'error_type' => '1',
+                        'errorTime'  => time(),
+                        'reason'     => 2
+                    );
+
+                    $insert_id = $tableClass->insert('dev_error',$data);
+
+                    //发送短信经过提醒
+                    $result = send_message('数据间隔过长, 可能存在丢失');
+                    if($result['result'] == '10701'){
+                        $updata = array('if_send_msg' => 1);
+                        $res    = $tableClass->update('dev_error',$updata,"id='{$insert_id}'");
+                    }
+
+                }
+            }
             $resolved_body[$key]['at'] = date('Y-m-d H:i:s',$val['at']/1000);
         }
+
+        $_SESSION[$endArr['ds_id']] = $endArr['at'];
     }
     file_put_contents('./data.txt',date('Y-m-d H:i:s').print_r('开始打印',true).PHP_EOL,FILE_APPEND);
     file_put_contents('./data.txt',print_r($resolved_body,true).PHP_EOL,FILE_APPEND);

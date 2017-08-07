@@ -21,7 +21,7 @@ $rowsArr = $tabeClass->getList('dev_error','*','','id desc');
     <script type="text/javascript" src="jquery-1.6.2.min.js"></script>
     <style type="text/css">
         .sub{text-align: center;font-size: 22px;margin-bottom: 30px;}
-        .warn_num{color: red;}
+        .warn_num{color: #19BBFF;}
         .warn_list{text-align: center;}
         .tab{margin: auto;}
     </style>
@@ -35,15 +35,15 @@ $rowsArr = $tabeClass->getList('dev_error','*','','id desc');
             <th>告警内容</th>
             <th>告警时间</th>
             <th>告警原因</th>
-            <!--<th>告警次数</th>-->
+            <!--<th>操作</th>-->
         </tr>
         <?php foreach($rowsArr as $key =>$val){   ?>
         <tr class="warn_list">
             <td><?php echo $val['id']; ?></td>
             <td><?php if($val['error_type'] == '1'){ echo '数据推送';} elseif($val['error_type'] == '2'){ echo '数据上传';}  ?></td>
             <td><?php echo date("Y-m-d H:i:s",$val['errorTime']); ?></td>
-            <td><?php if($val['reason'] == 1){echo '设备已离线';}else{echo '数据为空';} ?></td>
-            <!--<td class="warn_num">5</td>-->
+            <td><?php if($val['reason'] == 1){echo '设备已离线';}if($val['reason'] == 2){echo '数据间隔过长, 可能存在丢失';}else{echo '数据为空';} ?></td>
+           <!-- <td class="warn_num"><a href="./datalist.php">查看详情</a></td>-->
         </tr>
         <?php  }  ?>
     </table>
