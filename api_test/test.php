@@ -83,8 +83,12 @@ if(!empty($resolved_body)){
         }
 
         $_SESSION[$endArr['ds_id']] = $endArr['at'];
+        file_put_contents('./data.txt',date('Y-m-d H:i:s').print_r('开始打印',true).PHP_EOL,FILE_APPEND);
+        file_put_contents('./data.txt',date('Y-m-d H:i:s').print_r($_SESSION,true).PHP_EOL,FILE_APPEND);
+//        file_put_contents('./data.txt',date('Y-m-d H:i:s').print_r('结束打印',true).PHP_EOL,FILE_APPEND);
+
     }
-    file_put_contents('./data.txt',date('Y-m-d H:i:s').print_r('开始打印',true).PHP_EOL,FILE_APPEND);
+//    file_put_contents('./data.txt',date('Y-m-d H:i:s').print_r('开始打印',true).PHP_EOL,FILE_APPEND);
     file_put_contents('./data.txt',print_r($resolved_body,true).PHP_EOL,FILE_APPEND);
     file_put_contents('./data.txt',date('Y-m-d H:i:s').print_r('结束打印',true).PHP_EOL,FILE_APPEND);
     die;
