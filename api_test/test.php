@@ -123,7 +123,7 @@ if(empty($resolved_body)){
     $data_info = "数据为空";
     $dx_url    = "http://cs.37jy.com/demo_test/datapush.php";
     $sicode    = "cc71c15b69f14dc89620b5ca795f0d5e";
-    $mobiles   = "13368233580";
+    $mobiles   = "13368233580,13883976527,18323031987,13637892912,13996250880";
     $get_url   = "http://api.sms.heclouds.com/tempsmsSend?sicode={$sicode}&mobiles={$mobiles}&tempid=10862&data={$data_info}&url={$dx_url}";
 
     $result    = get_html($get_url);
