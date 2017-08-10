@@ -22,27 +22,34 @@ $resolved_body = Util::resolveBody($raw_input);
 
 $tableClass = new table($config);
 
+//判断推送数据是否为空，为空时则告警
 if(!empty($resolved_body)){
 
-    if($resolved_body['type'] == 2){
+    if($resolved_body['type'] == 2){//数据为设备在线信息
         $resolved_body['at'] = date('Y-m-d H:i:s',$resolved_body['at']/1000);
 
-    }else{
-        $str        = date('YmdHis').'_'.$resolved_body[0]['ds_id'];
-        $startArr   = reset($resolved_body);
+    }else{//数据流信息
+        /*$str        = date('YmdHis').'_'.$resolved_body[0]['ds_id'];
+        $startArr   = reset($resolved_body);*/
         $endArr     = end($resolved_body);
-        $startArr['ident'] = $str;
-        $endArr['ident']   = $str;
+        unset($endArr['type']);
+        /*$startArr['ident'] = $str;
+        $endArr['ident']   = $str;*/
 
-        unset($startArr['type']);
+        /*unset($startArr['type']);
         unset($endArr['type']);
         $start_res  = $tableClass->insert('data_str',$startArr);
-        $end_res    = $tableClass->insert('data_str',$endArr);
+        $end_res    = $tableClass->insert('data_str',$endArr);*/
 
+        $list = array();
         foreach($resolved_body as $key => $val){
+            unset($val['type']);
             if($key == 0){
                 if($_SESSION[$endArr['ds_id']] ){
-                    if( ($val['at']-$_SESSION[$endArr['ds_id']]) > 3000 ){
+                    if( ($val['at']-$_SESSION[$endArr['ds_id']]['at']) > 5000 ){//判断数据的间隔时间是否超时
+                        $list[] = $_SESSION[$endArr['ds_id']];
+                        $list[] = $val;
+
                         $data = array(
                             'error_type' => '1',
                             'errorTime'  => time(),
@@ -52,16 +59,20 @@ if(!empty($resolved_body)){
                         $insert_id = $tableClass->insert('dev_error',$data);
 
                         //发送短信经过提醒
-                        $result = send_message('数据间隔过长, 可能存在丢失');
+                        /*$result = send_message('数据间隔过长, 可能存在丢失');
                         if($result['result'] == '10701'){
                             $updata = array('if_send_msg' => 1);
                             $res    = $tableClass->update('dev_error',$updata,"id='{$insert_id}'");
-                        }
+                        }*/
 
                     }
                 }
             }else{
-                if($resolved_body[$key]['at'] - $resolved_body[$key-1]['at'] > 3000 ){
+                if(($val['at'] - $resolved_body[$key-1]['at']) > 5000 ){//判断数据的间隔时间是否超时
+
+                    $list[] = $resolved_body[$key-1];
+                    $list[] = $val;
+
                     $data = array(
                         'error_type' => '1',
                         'errorTime'  => time(),
@@ -71,31 +82,42 @@ if(!empty($resolved_body)){
                     $insert_id = $tableClass->insert('dev_error',$data);
 
                     //发送短信经过提醒
-                    $result = send_message('数据间隔过长, 可能存在丢失');
+                   /* $result = send_message('数据间隔过长, 可能存在丢失');
                     if($result['result'] == '10701'){
                         $updata = array('if_send_msg' => 1);
                         $res    = $tableClass->update('dev_error',$updata,"id='{$insert_id}'");
-                    }
+                    }*/
 
                 }
             }
             $resolved_body[$key]['at'] = date('Y-m-d H:i:s',$val['at']/1000);
         }
 
-        $_SESSION[$endArr['ds_id']] = $endArr['at'];
+        $newlist = unique($list);
+        //判断是否存在超时的数据
+        if(!empty($newlist)){
+            foreach($newlist as $ke =>$va){
+
+                //判断数据是否已经入库
+                $getlist = $tableClass ->getList('data_str','*',"at={$va['at']}");
+                if(empty($getlist)){
+                    $res = $tableClass ->insert('data_str',$va);
+                }
+            }
+        }
+
+        $_SESSION[$endArr['ds_id']] = $endArr;
         file_put_contents('./data.txt',date('Y-m-d H:i:s').print_r('开始打印',true).PHP_EOL,FILE_APPEND);
         file_put_contents('./data.txt',date('Y-m-d H:i:s').print_r($_SESSION,true).PHP_EOL,FILE_APPEND);
 //        file_put_contents('./data.txt',date('Y-m-d H:i:s').print_r('结束打印',true).PHP_EOL,FILE_APPEND);
-
+//
     }
 //    file_put_contents('./data.txt',date('Y-m-d H:i:s').print_r('开始打印',true).PHP_EOL,FILE_APPEND);
     file_put_contents('./data.txt',print_r($resolved_body,true).PHP_EOL,FILE_APPEND);
     file_put_contents('./data.txt',date('Y-m-d H:i:s').print_r('结束打印',true).PHP_EOL,FILE_APPEND);
-    die;
-}
 
+}else{
 
-if(empty($resolved_body)){
     $time    = time();
     $dev_id  = '10072873';
     $apikey  = "OyvIPHO=yBK5p=h1sok0vDbRsKE=";
@@ -116,8 +138,6 @@ if(empty($resolved_body)){
     );
 
     $insert_id = $tableClass->insert('dev_error',$data);
-
-
 
     //短信报警提醒
     $data_info = "数据为空";
