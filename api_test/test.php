@@ -29,25 +29,26 @@ if(!empty($resolved_body)){
         $resolved_body['at'] = date('Y-m-d H:i:s',$resolved_body['at']/1000);
 
     }else{//数据流信息
-        /*$str        = date('YmdHis').'_'.$resolved_body[0]['ds_id'];
-        $startArr   = reset($resolved_body);*/
+        $str        = date('YmdHis').'_'.$resolved_body[0]['ds_id'];
+        $startArr   = reset($resolved_body);
         $endArr     = end($resolved_body);
-        unset($endArr['type']);
-        /*$startArr['ident'] = $str;
-        $endArr['ident']   = $str;*/
+        $ds_id      = $endArr['ds_id'];//数据流ID
 
-        /*unset($startArr['type']);
+        $startArr['ident'] = $str;
+        $endArr['ident']   = $str;
+
+        unset($startArr['type']);
         unset($endArr['type']);
         $start_res  = $tableClass->insert('data_str',$startArr);
-        $end_res    = $tableClass->insert('data_str',$endArr);*/
+        $end_res    = $tableClass->insert('data_str',$endArr);
 
         $list = array();
         foreach($resolved_body as $key => $val){
             unset($val['type']);
             if($key == 0){
-                if($_SESSION[$endArr['ds_id']] ){
-                    if( ($val['at']-$_SESSION[$endArr['ds_id']]['at']) > 5000 ){//判断数据的间隔时间是否超时
-                        $list[] = $_SESSION[$endArr['ds_id']];
+                if($_SESSION[$ds_id] ){
+                    if( ($val['at']-$_SESSION[$ds_id]['at']) > 5000 ){//判断数据的间隔时间是否超时
+                        $list[] = $_SESSION[$ds_id];
                         $list[] = $val;
 
                         $data = array(
@@ -99,14 +100,14 @@ if(!empty($resolved_body)){
             foreach($newlist as $ke =>$va){
 
                 //判断数据是否已经入库
-                $getlist = $tableClass ->getList('data_str','*',"at={$va['at']}");
+                $getlist = $tableClass ->getList('data_lag','*',"at={$va['at']}");
                 if(empty($getlist)){
-                    $res = $tableClass ->insert('data_str',$va);
+                    $res = $tableClass ->insert('data_lag',$va);
                 }
             }
         }
-
-        $_SESSION[$endArr['ds_id']] = $endArr;
+        unset($_SESSION[$ds_id]);
+        $_SESSION[$ds_id] = $endArr;
         file_put_contents('./data.txt',date('Y-m-d H:i:s').print_r('开始打印',true).PHP_EOL,FILE_APPEND);
         file_put_contents('./data.txt',date('Y-m-d H:i:s').print_r($_SESSION,true).PHP_EOL,FILE_APPEND);
 //        file_put_contents('./data.txt',date('Y-m-d H:i:s').print_r('结束打印',true).PHP_EOL,FILE_APPEND);
