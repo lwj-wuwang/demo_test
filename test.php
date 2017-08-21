@@ -10,8 +10,25 @@ date_default_timezone_set('Asia/Chongqing');
 require_once "./func.php";
 require_once './iot_php/OneNetApi.php';
 
-session_start();
-//短信报警提醒
+$apikey = 'OyvIPHO=yBK5p=h1sok0vDbRsKE=';
+$apiurl = 'http://api.heclouds.com';
+$OneApi = new OneNetApi($apikey,$apiurl);
+$dev_id = 10072873;
+$ds_id  = 'green_statu';
+$result = $OneApi->datastream($dev_id,$ds_id);
+echo '<pre>';
+print_r($result);
+die;
+
+//session_start();
+/*$time = 1502677738;
+echo date('Y-m-d H:i:s',$time);*/
+/*$_SESSION['red'] = 12345;
+$_SESSION['blue'] = 'asdfg';
+unset($_SESSION['red']);
+$_SESSION['red'] = 54321;
+debug($_SESSION['red']);
+//短信报警提醒*/
 /*$data_info = "数据为空";
 $dx_url    = "http://cs.37jy.com/demo_test/datapush.php";
 $sicode    = "cc71c15b69f14dc89620b5ca795f0d5e";
@@ -29,15 +46,73 @@ $oneOb = new OneNetApi($apikey, $apiurl);
 $listdata = $oneOb->device_list(1,30,"0x0000001609004900");
 
 debug($listdata);*/
-$time_str = 1500950665672;
-$time_str = 1500950670232;
+$time_str = 1502687769857;//2017-08-14 13:16:09 powder_quantity_b
+$time_str = 1502687765757;//2017-08-14 13:16:05 powder_quantity_c
+$time_str = 1502687751556;//2017-08-14 13:15:51 alarm_output
+$time_str = 1502687746317;//2017-08-14 13:15:46 cup_rest
+$time_str = 1502682223689;//2017-08-14 11:43:43 cup_rest
+$time_str = 1502682199549;//2017-08-14 11:43:19 cup_rest
+$time_str = 1502682066568;//2017-08-14 11:41:06 powder_quantity_b
+$time_str = 1502682060528;//2017-08-14 11:41:00 powder_quantity_c
+$time_str = 1502682038870;//2017-08-14 11:40:38 alarm_output
+$time_str = 1502682035830;//2017-08-14 11:40:35 cup_rest
+$time_str = 1502681789398;//2017-08-14 11:36:29 cup_rest
+$time_str = 1502681233568;//2017-08-14 11:27:13 powder_quantity_b
+$time_str = 1502681227725;//2017-08-14 11:27:07 powder_quantity_c
+$time_str = 1502681210901;//2017-08-14 11:26:50 alarm_output
+$time_str = 1502681208881;//2017-08-14 11:26:48 cup_rest
+$time_str = 1502681040424;//2017-08-14 11:24:00 powder_quantity_b
+$time_str = 1502681035984;//2017-08-14 11:23:55 powder_quantity_c
+$time_str = 1502681017664;//2017-08-14 11:23:37 alarm_output
+$time_str = 1502681015664;//2017-08-14 11:23:35 cup_rest
+$time_str = 1502680553286;//2017-08-14 11:15:53 powder_quantity_b
+$time_str = 1502680550826;//2017-08-14 11:15:50 powder_quantity_c
+$time_str = 1502680550825;//2017-08-14 11:15:50 alarm_output
+$time_str = 1502680550825;//2017-08-14 11:15:50 cup_rest
+$time_str = 1502677318596;//2017-08-14 10:21:58 cup_rest
+$time_str = 1502676432376;//2017-08-14 10:07:12 cup_rest
+$time_str = 1502687801665;//2017-08-14 13:16:41 lock_status
+$time_str = 1502687799918;//2017-08-14 13:16:39 alarm_sensor
+$time_str = 1502682108911;//2017-08-14 11:41:48 lock_status
+$time_str = 1502682105249;//2017-08-14 11:41:45 alarm_sensor
+$time_str = 1502681271845;//2017-08-14 11:27:51 lock_status
+$time_str = 1502681263904;//2017-08-14 11:27:43 alarm_sensor
+$time_str = 1502681084142;//2017-08-14 11:24:44 lock_status
+$time_str = 1502681082625;//2017-08-14 11:24:42 alarm_sensor
+$time_str = 1502680555965;//2017-08-14 11:15:55 alarm_sensor
+$time_str = 1502680555965;//2017-08-14 11:15:55 lock_status
+$time_str = 1502691737754;//2017-08-14 14:22:17 powder_quantity_e
+$time_str = 1502687781879;//2017-08-14 13:16:21 powder_quantity_d
+$time_str = 1502687763738;//2017-08-14 13:16:03 powder_quantity_d
+$time_str = 1502687759158;//2017-08-14 13:15:59 powder_quantity_e
+$time_str = 1502682080368;//2017-08-14 11:41:20 powder_quantity_d
+$time_str = 1502682054507;//2017-08-14 11:40:54 powder_quantity_d
+$time_str = 1502682049869;//2017-08-14 11:40:49 powder_quantity_e
+$time_str = 1502681245664;//2017-08-14 11:27:25 powder_quantity_d
+$time_str = 1502681223504;//2017-08-14 11:27:03 powder_quantity_d
+$time_str = 1502681221524;//2017-08-14 11:27:01 powder_quantity_e
+$time_str = 1502681054584;//2017-08-14 11:24:14 powder_quantity_d
+$time_str = 1502681034244;//2017-08-14 11:23:54 powder_quantity_d
+$time_str = 1502681028884;//2017-08-14 11:23:48 powder_quantity_e
+$time_str = 1502680553286;//2017-08-14 11:15:53 powder_quantity_d
+$time_str = 1502680550826;//2017-08-14 11:15:50 powder_quantity_e
+$time_str = 1502680550826;//2017-08-14 11:15:50 powder_quantity_d
+
+
+
+
+
+
+
+//$time_str = 1500950670232;
 echo '<pre>';
 //echo time();
 echo '<pre>';
-echo date('y-m-d H:i:s',$time_str/1000);
+echo date('Y-m-d H:i:s',$time_str/1000);
 echo '<pre>';
 //$str = strtotime('17-07-25 10:44:26') * 1000;
-$str = 1500950670232;
+die;
+/*$str = 1500950670232;
 $cha =  $str - $time_str;
 echo $cha;
 echo '<pre>';
@@ -45,7 +120,7 @@ if(($str - $time_str)>3000){
     echo '超时';
 }else{
     echo 'ok';
-}
+}*/
 
 $lastarr = array
 (
@@ -356,35 +431,3 @@ $arr1 = array
 $arr2 = unique($arr1);
 debug($arr2);
 
-
-function unique($data = array()){
-    $tmp = array();
-    foreach($data as $key => $value){
-        //把一维数组键值与键名组合
-        foreach($value as $key1 => $value1){
-            $value[$key1] = $key1 . '_|_' . $value1;//_|_分隔符复杂点以免冲突
-
-        }
-        $tmp[$key] = implode(',|,', $value);//,|,分隔符复杂点以免冲突
-
-    }
-
-    //对降维后的数组去重复处理
-    $tmp = array_unique($tmp);
-
-    //重组二维数组
-    $newArr = array();
-    $tmp_v3 = array();
-    foreach($tmp as $k => $tmp_v){
-        $tmp_v2 = explode(',|,', $tmp_v);
-
-        foreach($tmp_v2 as $k2 => $v2){
-            $v2 = explode('_|_', $v2);
-
-            $tmp_v3[$v2[0]] = $v2[1];
-        }
-        $newArr[$k] = $tmp_v3;
-
-    }
-    return $newArr;
-}

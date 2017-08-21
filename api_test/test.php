@@ -60,11 +60,11 @@ if(!empty($resolved_body)){
                         $insert_id = $tableClass->insert('dev_error',$data);
 
                         //发送短信经过提醒
-                        /*$result = send_message('数据间隔过长, 可能存在丢失');
+                        $result = send_message('数据间隔过长, 可能存在丢失');
                         if($result['result'] == '10701'){
                             $updata = array('if_send_msg' => 1);
                             $res    = $tableClass->update('dev_error',$updata,"id='{$insert_id}'");
-                        }*/
+                        }
 
                     }
                 }
@@ -83,15 +83,16 @@ if(!empty($resolved_body)){
                     $insert_id = $tableClass->insert('dev_error',$data);
 
                     //发送短信经过提醒
-                   /* $result = send_message('数据间隔过长, 可能存在丢失');
+                    $result = send_message('数据间隔过长, 可能存在丢失');
                     if($result['result'] == '10701'){
                         $updata = array('if_send_msg' => 1);
                         $res    = $tableClass->update('dev_error',$updata,"id='{$insert_id}'");
-                    }*/
+                    }
 
                 }
             }
             $resolved_body[$key]['at'] = date('Y-m-d H:i:s',$val['at']/1000);
+
         }
 
         $newlist = unique($list);
@@ -102,6 +103,7 @@ if(!empty($resolved_body)){
                 //判断数据是否已经入库
                 $getlist = $tableClass ->getList('data_lag','*',"at={$va['at']}");
                 if(empty($getlist)){
+                    $va['addTime']  = time();
                     $res = $tableClass ->insert('data_lag',$va);
                 }
             }
@@ -110,10 +112,10 @@ if(!empty($resolved_body)){
         $_SESSION[$ds_id] = $endArr;
         file_put_contents('./data.txt',date('Y-m-d H:i:s').print_r('开始打印',true).PHP_EOL,FILE_APPEND);
         file_put_contents('./data.txt',date('Y-m-d H:i:s').print_r($_SESSION,true).PHP_EOL,FILE_APPEND);
-//        file_put_contents('./data.txt',date('Y-m-d H:i:s').print_r('结束打印',true).PHP_EOL,FILE_APPEND);
-//
+
+
     }
-//    file_put_contents('./data.txt',date('Y-m-d H:i:s').print_r('开始打印',true).PHP_EOL,FILE_APPEND);
+
     file_put_contents('./data.txt',print_r($resolved_body,true).PHP_EOL,FILE_APPEND);
     file_put_contents('./data.txt',date('Y-m-d H:i:s').print_r('结束打印',true).PHP_EOL,FILE_APPEND);
 
@@ -141,15 +143,7 @@ if(!empty($resolved_body)){
     $insert_id = $tableClass->insert('dev_error',$data);
 
     //短信报警提醒
-    $data_info = "数据为空";
-    $dx_url    = "http://cs.37jy.com/demo_test/datapush.php";
-    $sicode    = "cc71c15b69f14dc89620b5ca795f0d5e";
-    $mobiles   = "13368233580,13883976527,18323031987,13637892912,13996250880";
-    $get_url   = "http://api.sms.heclouds.com/tempsmsSend?sicode={$sicode}&mobiles={$mobiles}&tempid=10862&data={$data_info}&url={$dx_url}";
-
-    $result    = get_html($get_url);
-    file_put_contents('./test.txt',print_r($result,true).PHP_EOL,FILE_APPEND);
-    $result    = json_decode($result,true);
+    $result = send_message('数据为空');
     if($result['result'] == '10701'){
         $updata = array('if_send_msg' => 1);
         $res    = $tableClass->update('dev_error',$updata,"id='{$insert_id}'");

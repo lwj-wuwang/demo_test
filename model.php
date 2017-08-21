@@ -61,7 +61,7 @@ class table{
         }
         $where  = empty($where)  ? ''   : ' AND '.$where;
         $order  = empty($order)  ? ''   : ' ORDER BY ' . $order;
-        $limit  = empty($limit)  ? ''   : ' LIMIT ' . $limit;
+        $limit  = empty($limit)  ? ''   :  $limit;
         $SQL    = "SELECT ".$field . " FROM " . $table ." WHERE 1=1 " . $where . $order . $limit;
         $query  = mysql_query($SQL,$this->_link);
 
@@ -71,6 +71,41 @@ class table{
         }
 
         return $rows;
+
+    }
+
+    //查询总数
+    function counts($table,$where=''){
+        if(empty($table)){
+            return false;
+        }
+        $where  = empty($where)  ? ''   : ' AND '.$where;
+        $SQL    = "SELECT count(*) as num FROM " . $table ." WHERE 1=1 " . $where;
+        $query  = mysql_query($SQL,$this->_link);
+
+        $result = mysql_fetch_assoc($query);
+        return $result['num'];
+
+    }
+
+
+    function pageLimit($counts,$pagesize=10,$pageNo=1){
+        if($counts == false){
+            return false;
+        }
+        $countPage = ceil($counts / $pagesize);
+        if($pageNo < 1){
+            $pageNo = 1;
+        }
+
+        if($pageNo > $countPage){
+            $pageNo = $countPage;
+        }
+
+        $start = ($pageNo - 1) * $pagesize;
+        $sql = " LIMIT {$start},{$pagesize}";
+
+        return $sql;
 
     }
 }
