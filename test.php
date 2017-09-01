@@ -10,12 +10,48 @@ date_default_timezone_set('Asia/Chongqing');
 require_once "./func.php";
 require_once './iot_php/OneNetApi.php';
 
-$apikey = 'OyvIPHO=yBK5p=h1sok0vDbRsKE=';
+/*$memcache_obj = memcache_connect("localhost", 11211);
+$memcache_obj->set('key0', '测试', false, 30);
+$memcache_obj->set('key0', '测试0', false, 30);
+echo  $memcache_obj->get("key0");
+die;
+
+$a = 1503452281895;
+$b = 1503452290411;
+$c = 1503452298930;
+echo $b-$a;
+echo '<pre>';
+echo $c-$b;die;*/
+echo date('y-m-d H:i:s',1503995285);die;
+
+//$apikey = '8D=h5AFr8ueFS8XWX4=o=L7u9M4=';
+$apikey = 'iQoBW8WTNcZ18MHPcQYTfLMOpTY=';
 $apiurl = 'http://api.heclouds.com';
-$OneApi = new OneNetApi($apikey,$apiurl);
-$dev_id = 10072873;
-$ds_id  = 'green_statu';
-$result = $OneApi->datastream($dev_id,$ds_id);
+$OneApi = new OneNetApi($apikey);
+$error_code = 0;
+$error = '';
+$dev_id = 5280463;
+//$dev_id = 7480650;
+//$ds_id  = array('id'=>'test1');
+$ds_id  = 'location';
+
+$res = array();
+//$ds_id  = 'location';
+//$ds_id  = 'bin_data';
+$result = $OneApi->datastream_delete($dev_id,$ds_id);
+//$result = $OneApi->datastream_add($dev_id,$ds_id);
+if (empty($result)) {
+    //处理错误信息
+    $error_code = $OneApi->error_no();
+    $error = $OneApi->error();
+    $res['error_code'] = $error_code;
+    $res['error']      = $error;
+    echo '<pre>';
+    print_r($res);die;
+}
+
+
+//$result = $OneApi->datastream_of_dev($dev_id);
 echo '<pre>';
 print_r($result);
 die;
@@ -46,6 +82,7 @@ $oneOb = new OneNetApi($apikey, $apiurl);
 $listdata = $oneOb->device_list(1,30,"0x0000001609004900");
 
 debug($listdata);*/
+/*
 $time_str = 1502687769857;//2017-08-14 13:16:09 powder_quantity_b
 $time_str = 1502687765757;//2017-08-14 13:16:05 powder_quantity_c
 $time_str = 1502687751556;//2017-08-14 13:15:51 alarm_output
@@ -98,20 +135,22 @@ $time_str = 1502680553286;//2017-08-14 11:15:53 powder_quantity_d
 $time_str = 1502680550826;//2017-08-14 11:15:50 powder_quantity_e
 $time_str = 1502680550826;//2017-08-14 11:15:50 powder_quantity_d
 
+*/
 
 
 
 
 
-
-//$time_str = 1500950670232;
+/*$time_str = 1503387616800;
 echo '<pre>';
 //echo time();
 echo '<pre>';
 echo date('Y-m-d H:i:s',$time_str/1000);
 echo '<pre>';
 //$str = strtotime('17-07-25 10:44:26') * 1000;
-die;
+die;*/
+
+
 /*$str = 1500950670232;
 $cha =  $str - $time_str;
 echo $cha;
@@ -121,245 +160,91 @@ if(($str - $time_str)>3000){
 }else{
     echo 'ok';
 }*/
+$session = Array(
+    'temp' => Array
+    (
+        'at' => '2017-08-22 15:40:16',
+        'ds_id' => 'temp',
+        'value' => 30,
+        'dev_id' => 11306166,
+        'ident' => '20170822154024_temp'
+        )
+
+);
+
 
 $lastarr = array
 (
     0 => Array(
-        'at'    => 1501198998836,
+        'at'    => '2017-08-22 15:39:51',
         'type'  => 1,
-        'ds_id' => 'yellow_statu',
-        'value' => 0,
-        'dev_id' => 10072873
+        'ds_id' => 'temp',
+        'value' => 30,
+        'dev_id' => 11306166
     ),
 
     1 => Array(
-        'at'    => 1501199000475,
+        'at'    => '2017-08-22 15:39:59',
         'type'  => 1,
-        'ds_id' => 'yellow_statu',
-        'value' => 0,
-        'dev_id' => 10072873
+        'ds_id' => 'temp',
+        'value' => 30,
+        'dev_id' => 11306166
     ),
 
     2 => Array(
-        'at'    => 1501199002099,
+        'at'    => '2017-08-22 15:40:08',
         'type'  => 1,
-        'ds_id' => 'yellow_statu',
-        'value' => 0,
-        'dev_id' => 10072873
+        'ds_id' => 'temp',
+        'value' => 30,
+        'dev_id' => 11306166
     ),
 
     3 => Array(
-        'at'    => 1501199003730,
+        'at'    => '2017-08-22 15:40:16',
         'type'  => 1,
-        'ds_id' => 'yellow_statu',
-        'value' => 0,
-        'dev_id' => 10072873
+        'ds_id' => 'temp',
+        'value' => 30,
+        'dev_id' => 11306166
     ),
 
-    4 => Array(
-        'at'    => 1501199005362,
-        'type'  => 1,
-        'ds_id' => 'yellow_statu',
-        'value' => 0,
-        'dev_id' => 10072873
-    ),
-
-    5 => Array(
-        'at'    => 1501199006993,
-        'type'  => 1,
-        'ds_id' => 'yellow_statu',
-        'value' => 0,
-        'dev_id' => 10072873
-    ),
-
-    6 => Array(
-        'at'    => 1501199008625,
-        'type'  => 1,
-        'ds_id' => 'yellow_statu',
-        'value' => 0,
-        'dev_id' => 10072873
-    ),
-
-    7 => Array(
-        'at'    => 1501199010260,
-        'type'  => 1,
-        'ds_id' => 'yellow_statu',
-        'value' => 0,
-        'dev_id' => 10072873
-    ),
-
-    8 => Array(
-        'at'    => 1501199011888,
-        'type'  => 1,
-        'ds_id' => 'yellow_statu',
-        'value' => 0,
-        'dev_id' => 10072873
-    ),
-
-    9 => Array
-    (
-        'at'    => 1501199013519,
-        'type'  => 1,
-        'ds_id' => 'yellow_statu',
-        'value' => 0,
-        'dev_id' => 10072873
-    ),
-    10 => Array(
-        'at'    => 1501199015148,
-        'type'  => 1,
-        'ds_id' => 'yellow_statu',
-        'value' => 0,
-        'dev_id' => 10072873
-    )
 );
 
 $endarr = end($lastarr);
+$endarr['at'] = strtotime($endarr['at']);
 $_SESSION[$endarr['ds_id']] = $endarr['at'];
 
 $arr = array
 (
     0 => Array(
-            'at'    => 1501199016781,
-            'type'  => 1,
-            'ds_id' => 'yellow_statu',
-            'value' => 0,
-            'dev_id' => 10072873
+        'at'    => '2017-08-22 15:40:25',
+        'type'  => 1,
+        'ds_id' => 'temp',
+        'value' => 30,
+        'dev_id' => 11306166
         ),
 
     1 => Array(
-            'at'    => 1501199018412,
-            'type'  => 1,
-            'ds_id' => 'yellow_statu',
-            'value' => 0,
-            'dev_id' => 10072873
+        'at'    => '2017-08-22 15:40:33',
+        'type'  => 1,
+        'ds_id' => 'temp',
+        'value' => 30,
+        'dev_id' => 11306166
         ),
 
     2 => Array(
-            'at'    => 1501199020048,
-            'type'  => 1,
-            'ds_id' => 'yellow_statu',
-            'value' => 0,
-            'dev_id' => 10072873
+        'at'    => '2017-08-22 15:40:42',
+        'type'  => 1,
+        'ds_id' => 'temp',
+        'value' => 30,
+        'dev_id' => 11306166
         ),
 
     3 => Array(
-            'at'    => 1501199021677,
-            'type'  => 1,
-            'ds_id' => 'yellow_statu',
-            'value' => 0,
-            'dev_id' => 10072873
-        ),
-
-    4 => Array(
-            'at'    => 1501199023309,
-            'type'  => 1,
-            'ds_id' => 'yellow_statu',
-            'value' => 0,
-            'dev_id' => 10072873
-        ),
-
-    5 => Array(
-            'at'    => 1501199024940,
-            'type'  => 1,
-            'ds_id' => 'yellow_statu',
-            'value' => 0,
-            'dev_id' => 10072873
-        ),
-
-    6 => Array(
-            'at'    => 1501199026570,
-            'type'  => 1,
-            'ds_id' => 'yellow_statu',
-            'value' => 0,
-            'dev_id' => 10072873
-        ),
-
-    7 => Array(
-            'at'    => 1501199028202,
-            'type'  => 1,
-            'ds_id' => 'yellow_statu',
-            'value' => 0,
-            'dev_id' => 10072873
-        ),
-
-    8 => Array(
-            'at'    => 1501199029833,
-            'type'  => 1,
-            'ds_id' => 'yellow_statu',
-            'value' => 0,
-            'dev_id' => 10072873
-        ),
-
-    9 => Array
-(
-            'at'    => 1501199031465,
-            'type'  => 1,
-            'ds_id' => 'yellow_statu',
-            'value' => 0,
-            'dev_id' => 10072873
-        ),
-    10 => Array(
-            'at'    => 1501199033096,
-            'type'  => 1,
-            'ds_id' => 'yellow_statu',
-            'value' => 0,
-            'dev_id' => 10072873
-        ),
-
-    11 => Array(
-            'at'    => 1501199034733,
-            'type'  => 1,
-            'ds_id' => 'yellow_statu',
-            'value' => 0,
-            'dev_id' => 10072873
-        ),
-
-    12 => Array(
-            'at'    => 1501199036360,
-            'type'  => 1,
-            'ds_id' => 'yellow_statu',
-            'value' => 0,
-            'dev_id' => 10072873
-        ),
-
-    13 => Array(
-            'at'    => 1501199037990,
-            'type'  => 1,
-            'ds_id' => 'yellow_statu',
-            'value' => 0,
-            'dev_id' => 10072873
-        ),
-
-    14 => Array(
-            'at'    => 1501199039620,
-            'type'  => 1,
-            'ds_id' => 'yellow_statu',
-            'value' => 0,
-            'dev_id' => 10072873
-        ),
-
-    15 => Array(
-            'at'    => 1501199041253,
-            'type'  => 1,
-            'ds_id' => 'yellow_statu',
-            'value' => 0,
-            'dev_id' => 10072873
-        ),
-
-    16 => Array(
-            'at'    => 1501199042888,
-            'type'  => 1,
-            'ds_id' => 'yellow_statu',
-            'value' => 0,
-            'dev_id' => 10072873
-        ),
-
-    17 => Array(
-            'at'    => 1501199044516,
-            'type'  => 1,
-            'ds_id' => 'yellow_statu',
-            'value' => 0,
-            'dev_id' => 10072873
+        'at'    => '2017-08-22 15:40:50',
+        'type'  => 1,
+        'ds_id' => 'temp',
+        'value' => 30,
+        'dev_id' => 11306166
         ),
 
 );
@@ -368,22 +253,24 @@ $endarr = end($arr);
 $list = array();
 $data = array();
 foreach($arr as $key =>$val){
+    $val['at'] = strtotime($val['at']);
     if($key !=0){
-        if( $val['at'] - $arr[$key-1]['at'] >3000 ){
+        $arr[$key-1]['at'] = strtotime($arr[$key-1]['at']);
+        if( $val['at'] - $arr[$key-1]['at'] >10 ){
             $list[$key] = '超时';
         }
     }else{
-        if( $val['at'] - $_SESSION[$endarr['ds_id']] >3000 ){
+        if( $val['at'] - $_SESSION[$endarr['ds_id']] >10 ){
             $list[$key] = '超时';
         }
     }
 
-    $val['at'] = date('Y-m-d H:i:s',$val['at']/1000);
+//    $val['at'] = date('Y-m-d H:i:s',$val['at']/1000);
     $data[$key] = $val;
 }
 echo '<pre>';
 print_r($list);
-//debug($data);
+debug($data);
 //debug($list);
 
 $arr1 = array
