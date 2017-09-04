@@ -4,13 +4,26 @@ date_default_timezone_set('Asia/Chongqing');
 require_once "func.php";
 require_once "./api_test/table_config.php";
 require_once "./model.php";
-$tabeClass = new table($config);
+
 $pageno     = isset($_GET['page']) ? $_GET['page'] : 1;
-if($_POST){
-    debug($_POST);
+$protocol = isset($_GET['protocol'])    ?  $_GET['protocol']   : $_POST['protocol'];
+$protocol = !empty($protocol)      ? $protocol  : 'edp';
+//debug($protocol);
+if($protocol == 'edp'){
+    $table = 'data_str';
+}else{
+    $table = 'data_str_mqtt';
 }
+
+
+
+
+$tabeClass = new table($config);
+//数据流列表
+$ds_arr = $tabeClass->getGroup($table,'ds_id',"ds_id");
+//debug($ds_arr);
 //$lasttime = (time() - 3600) * 1000;
-$arr = $tabeClass->getList('data_str','*',"ds_id = 'blue_statu' ");//AND at>={$lasttime}
+$arr = $tabeClass->getList($table,'*',"ds_id = 'blue_statu' ");//AND at>={$lasttime}
 //$arr = $tabeClass->getList('data_str','*',"ds_id = 'red_statu' AND at>={$lasttime}");
 $counts = count($arr);
 /*echo '<pre>';
@@ -20,7 +33,6 @@ print_r($arr);*/
 
 $newarr = array();
 if($counts%2 == 0){//偶数
-
     if($arr[0]['ident'] == $arr[1]['ident']){//为整数对数组
         $j = 0;
         for($i=0;$i<$counts;$i++){
@@ -49,8 +61,8 @@ if($counts%2 == 0){//偶数
 
         $fristArr   = reset($arr);
         $endArr     = end($arr);
-        $fdata = $tabeClass->getList('data_str','*',"ident = '{$fristArr['ident']}' ");
-        $edata = $tabeClass->getList('data_str','*',"ident = '{$endArr['ident']}' ");
+        $fdata = $tabeClass->getList($table,'*',"ident = '{$fristArr['ident']}' ");
+        $edata = $tabeClass->getList($table,'*',"ident = '{$endArr['ident']}' ");
 
         if(!empty($fdata) || !empty($edata)){
             //首数组组合
@@ -97,7 +109,7 @@ if($counts%2 == 0){//偶数
             $j++;
         }
 
-        $edata = $tabeClass->getList('data_str','*',"ident = '{$endArr['ident']}' ");
+        $edata = $tabeClass->getList($table,'*',"ident = '{$endArr['ident']}' ");
         if(!empty($edata)) {
 
             //尾数组组合
@@ -127,7 +139,7 @@ if($counts%2 == 0){//偶数
             $j++;
         }
 
-        $fdata = $tabeClass->getList('data_str','*',"ident = '{$fristArr['ident']}' ");
+        $fdata = $tabeClass->getList($table,'*',"ident = '{$fristArr['ident']}' ");
 
         if(!empty($fdata)){
             //首数组组合
@@ -197,10 +209,12 @@ for($i=0;$i<$pageSize;$i++){
             <form action="" method="post">
                 <label>数据流</label>
                 <select name="ds_id">
-                    <option value="blue_statu" selected>blue_statu</option>
-                    <option value="yellow_statu">yellow_statu</option>
+                    <?php foreach($ds_arr as $ds_k => $ds_v){ ?>
+                    <option value="<?php echo $ds_v; ?>" ><?php echo $ds_v; ?> </option>
+                    <?php } ?>
+                    <!--<option value="yellow_statu">yellow_statu</option>
                     <option value="green_statu">green_statu</option>
-                    <option value="red_statu">red_statu</option>
+                    <option value="red_statu">red_statu</option>-->
                 </select>
 
                 <label>时间周期</label>

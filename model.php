@@ -88,7 +88,7 @@ class table{
 
     }
 
-
+    //分页
     function pageLimit($counts,$pagesize=10,$pageNo=1){
         if($counts == false){
             return false;
@@ -107,5 +107,20 @@ class table{
 
         return $sql;
 
+    }
+
+    function getGroup($table,$where,$field='*'){
+        if(empty($table) || empty($where)){
+            return false;
+        }
+
+        $SQL    = "SELECT ".$field . " FROM " . $table ." WHERE 1=1 GROUP BY " . $where;
+        $query  = mysql_query($SQL,$this->_link);
+        $rows   = array();
+        while($row  = mysql_fetch_assoc($query)){
+            $rows[] = $row;
+        }
+
+        return $rows;
     }
 }

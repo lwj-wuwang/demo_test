@@ -19,6 +19,7 @@ if(!empty($protocol)){
     }
 }else{
     $table = 'dev_error';
+    $protocol = 'edp';
 }
 
 $tableClass = new table($config);
@@ -58,6 +59,7 @@ $rowsArr  = $tableClass->getList($table,'*','if_solve=1','id desc',$limit);
         .notable{color: #969696;cursor:text; }
         .able{color: #1D69CA;cursor:pointer;}
         .sub_input{border: 1px solid #00a0e9; background: #00a0e9;color: #fff;border-radius: 15%;width: 50px;height: 25px;line-height: 20px;}
+        .warn_num .nosolute{color: red;}
     </style>
 </head>
 <body>
@@ -92,7 +94,7 @@ $rowsArr  = $tableClass->getList($table,'*','if_solve=1','id desc',$limit);
             <td><?php if($val['reason'] == 1){echo '设备已离线';}if($val['reason'] == 2){echo '数据间隔过长, 可能存在丢失';}else{echo '数据为空';} ?></td>
             <td><?php echo date("Y-m-d H:i:s",$val['errorTime']); ?></td>
             <td class="warn_num">
-                <a href="?id=<?php echo $val['id'] ?>&protocol=<?php echo $table; ?>&solve=1&page=<?php echo $pageNo; ?>">已解决</a>   |
+                <a href="?id=<?php echo $val['id'] ?>&protocol=<?php echo $table; ?>&solve=1&page=<?php echo $pageNo; ?>" class="nosolute">未解决</a>   |
                 <?php if($val['reason'] == 0 ){  ?>
                 <a href="./datalist.php?protocol=<?php echo $protocol; ?>">查看详情</a>
                 <?php }elseif($val['reason'] == 2){ ?>

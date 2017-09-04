@@ -297,7 +297,7 @@ function unique($data = array()){
 //短信发送
 function send_message($msg){
     $data_info = $msg;
-    $dx_url    = "http://cs.37jy.com/demo_test/datapush.php";
+    $dx_url    = "http://183.230.40.149:50001/demo_test/datapush.php";
     $sicode    = "cc71c15b69f14dc89620b5ca795f0d5e";
     $mobiles   = "13368233580,13883976527,18323031987,13637892912,13996250880";
     $get_url   = "http://api.sms.heclouds.com/tempsmsSend?sicode={$sicode}&mobiles={$mobiles}&tempid=10862&data={$data_info}&url={$dx_url}";

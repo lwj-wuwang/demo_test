@@ -22,7 +22,7 @@ $c = 1503452298930;
 echo $b-$a;
 echo '<pre>';
 echo $c-$b;die;*/
-echo date('y-m-d H:i:s',1503995285);die;
+/*echo date('y-m-d H:i:s',1503995285);die;
 
 //$apikey = '8D=h5AFr8ueFS8XWX4=o=L7u9M4=';
 $apikey = 'iQoBW8WTNcZ18MHPcQYTfLMOpTY=';
@@ -54,7 +54,7 @@ if (empty($result)) {
 //$result = $OneApi->datastream_of_dev($dev_id);
 echo '<pre>';
 print_r($result);
-die;
+die;*/
 
 //session_start();
 /*$time = 1502677738;
@@ -64,8 +64,10 @@ $_SESSION['blue'] = 'asdfg';
 unset($_SESSION['red']);
 $_SESSION['red'] = 54321;
 debug($_SESSION['red']);
+
+
 //短信报警提醒*/
-/*$data_info = "数据为空";
+$data_info = "数据为空";
 $dx_url    = "http://cs.37jy.com/demo_test/datapush.php";
 $sicode    = "cc71c15b69f14dc89620b5ca795f0d5e";
 $mobiles   = "13368233580";
@@ -74,7 +76,8 @@ $get_url   = "http://api.sms.heclouds.com/tempsmsSend?sicode={$sicode}&mobiles={
 $result    = get_html($get_url);
 file_put_contents('./test.txt',print_r($result,true).PHP_EOL,FILE_APPEND);
 $result    = json_decode($result,true);
-debug($result);*/
+debug($result);
+
 /*$apikey = 'j29Msh=PJ6cReT0sLoHnehqu13I=';
 $apiurl = 'http://api.heclouds.com';
 $oneOb = new OneNetApi($apikey, $apiurl);
