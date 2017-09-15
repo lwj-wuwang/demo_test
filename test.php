@@ -5,10 +5,13 @@
  * Date: 2017/5/31
  * Time: 10:57
  */
+error_reporting(E_ALL ^ E_DEPRECATED);
 header("Content-type: text/html; charset=utf-8");
 date_default_timezone_set('Asia/Chongqing');
 require_once "./func.php";
 require_once './iot_php/OneNetApi.php';
+require_once "./api_test/table_config.php";
+require_once "./model.php";
 
 /*$memcache_obj = memcache_connect("localhost", 11211);
 $memcache_obj->set('key0', '测试', false, 30);
@@ -22,9 +25,9 @@ $c = 1503452298930;
 echo $b-$a;
 echo '<pre>';
 echo $c-$b;die;*/
-/*echo date('y-m-d H:i:s',1503995285);die;
+echo date('y-m-d H:i:s',1504686685926/1000);die;
 
-//$apikey = '8D=h5AFr8ueFS8XWX4=o=L7u9M4=';
+/*//$apikey = '8D=h5AFr8ueFS8XWX4=o=L7u9M4=';
 $apikey = 'iQoBW8WTNcZ18MHPcQYTfLMOpTY=';
 $apiurl = 'http://api.heclouds.com';
 $OneApi = new OneNetApi($apikey);
@@ -64,20 +67,53 @@ $_SESSION['blue'] = 'asdfg';
 unset($_SESSION['red']);
 $_SESSION['red'] = 54321;
 debug($_SESSION['red']);
+*/
 
-
-//短信报警提醒*/
-$data_info = "数据为空";
-$dx_url    = "http://cs.37jy.com/demo_test/datapush.php";
+//短信报警提醒
+/*$data_info = "数据为空";
+$dx_url    = "http://183.230.40.149:50001/demo_test/datapush.php";
 $sicode    = "cc71c15b69f14dc89620b5ca795f0d5e";
-$mobiles   = "13368233580";
+$mobiles   = "13368233580,15178776456,15978902229";
 $get_url   = "http://api.sms.heclouds.com/tempsmsSend?sicode={$sicode}&mobiles={$mobiles}&tempid=10862&data={$data_info}&url={$dx_url}";
 
 $result    = get_html($get_url);
 file_put_contents('./test.txt',print_r($result,true).PHP_EOL,FILE_APPEND);
 $result    = json_decode($result,true);
-debug($result);
+debug($result);*/
 
+$new_list = Array
+(
+    0 => Array
+    (
+        'at' => 1504516371130,
+        'ds_id' => 'temp',
+        'value' => 27,
+        'dev_id' => 11306166,
+        'ident' => '20170904171258_temp'
+    ),
+
+    1 => Array
+    (
+        'at' => 1504572253226,
+        'ds_id' => 'temp',
+        'value' => 24,
+        'dev_id' => 11306166,
+        'ident' => '20170904171258_temp'
+    )
+
+);
+$tableClass = new table($config);
+if(!empty($new_list)){
+    foreach($new_list as $ke =>$va){
+
+        //判断数据是否已经入库
+        $getlist = $tableClass ->getList('data_lag_mqtt','*',"at={$va['at']}");
+        if(empty($getlist)){
+            $res = $tableClass ->insert('data_lag_mqtt',$va);
+        }
+    }
+}
+die;
 /*$apikey = 'j29Msh=PJ6cReT0sLoHnehqu13I=';
 $apiurl = 'http://api.heclouds.com';
 $oneOb = new OneNetApi($apikey, $apiurl);

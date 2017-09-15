@@ -22,6 +22,7 @@ class table{
         $keys   = "`".join("`,`",array_keys($data))."`";
         $vals   = "'" . join("','",$data ) . "'";
         $SQL    = "INSERT INTO ". $table ."({$keys}) VALUES({$vals})";
+        //echo $SQL;die;
 //        file_put_contents("./file.txt", "sql_".date("Y-m-d H:i:s").print_r($SQL, TRUE), FILE_APPEND);
         mysql_query($SQL,$this->_link);
         $insert_id = mysql_insert_id($this->_link);
@@ -55,14 +56,17 @@ class table{
         return $result;
     }
 
-    function getList($table,$field='*',$where='',$order='',$limit=''){
+    function getList($table,$field='*',$where='',$order='',$limit='',$group='',$having=''){
         if(empty($table)){
             return false;
         }
         $where  = empty($where)  ? ''   : ' AND '.$where;
         $order  = empty($order)  ? ''   : ' ORDER BY ' . $order;
         $limit  = empty($limit)  ? ''   :  $limit;
-        $SQL    = "SELECT ".$field . " FROM " . $table ." WHERE 1=1 " . $where . $order . $limit;
+        $group  = empty($group)  ? ''   :  ' GROUP BY ' . $group;
+        $having = empty($having) ? ''   : ' HAVING ' . $having;
+        $SQL    = "SELECT ".$field . " FROM " . $table ." WHERE 1=1 " . $where . $group . $having . $order . $limit;
+        file_put_contents('./data_at.txt',date('Y-m-d H:i:s').'_SQL_'.print_r($SQL,true).PHP_EOL,FILE_APPEND);
         $query  = mysql_query($SQL,$this->_link);
 
         $rows   = array();
@@ -109,12 +113,14 @@ class table{
 
     }
 
-    function getGroup($table,$where,$field='*'){
+    //分组
+    function getGroup($table,$where,$having='',$field='*'){
         if(empty($table) || empty($where)){
             return false;
         }
-
-        $SQL    = "SELECT ".$field . " FROM " . $table ." WHERE 1=1 GROUP BY " . $where;
+        $having = empty($having) ? '' : " HAVING ".$having;
+        $SQL    = "SELECT ".$field . " FROM " . $table ." WHERE 1=1 GROUP BY " . $where .$having;
+//        echo $SQL;die;
         $query  = mysql_query($SQL,$this->_link);
         $rows   = array();
         while($row  = mysql_fetch_assoc($query)){

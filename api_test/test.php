@@ -29,6 +29,11 @@ if(!empty($resolved_body)){
 
     if($resolved_body['type'] == 2){//数据为设备在线信息
         $resolved_body['at'] = date('Y-m-d H:i:s',$resolved_body['at']/1000);
+        $new_resolved = $resolved_body;
+        $memcache->delete('green_statu');
+        $memcache->delete('blue_statu');
+        $memcache->delete('red_statu');
+        $memcache->delete('yellow_statu');
 
     }else{//数据流信息
         $str        = date('YmdHis').'_'.$resolved_body[0]['ds_id'];
@@ -44,23 +49,30 @@ if(!empty($resolved_body)){
         $start_res  = $tableClass->insert('data_str',$startArr);
         $end_res    = $tableClass->insert('data_str',$endArr);
 
+        $err_num = date('YmdHis').rand(1000,9999);//错误编号
+        $memcache->set('num_'.$ds_id,$err_num);
         $list = array();
         foreach($resolved_body as $key => $val){
             unset($val['type']);
             if($key == 0){
                 $cache_data = $memcache->get($ds_id);
                 file_put_contents('./data_at.txt',date('Y-m-d H:i:s').'_sess_'.print_r($cache_data,true).PHP_EOL,FILE_APPEND);
-                if( isset($cache_data) ){
+                if( !empty($cache_data) ){
                     $diff0 = $val['at']-$cache_data['at'];
                     file_put_contents('./data_at.txt',date('Y-m-d H:i:s').'_'.$key.$val['ds_id'].'_减_'.print_r($diff0,true).PHP_EOL,FILE_APPEND);
                     if( ($val['at']-$cache_data['at']) > 5000 ){//判断数据的间隔时间是否超时
-                        $list[] = $_SESSION[$ds_id];
-                        $list[] = $val;
+                        $last_data = $cache_data;
+                        unset($last_data['ident']);
 
+                        $list[] = $last_data;
+                        $list[] = $val;
+                        $err	= $memcache->get('num_'.$val['ds_id']);
+                        file_put_contents('./data_at.txt',date('Y-m-d H:i:s').'_'.$key.$val['ds_id'].'_err_'.print_r($err,true).PHP_EOL,FILE_APPEND);
                         $data = array(
                             'error_type' => '1',
                             'errorTime'  => time(),
-                            'reason'     => 2
+                            'reason'     => 2,
+                            'error_num'  => $err
                         );
 
                         $insert_id = $tableClass->insert('dev_error',$data);
@@ -81,11 +93,13 @@ if(!empty($resolved_body)){
 
                     $list[] = $resolved_body[$key-1];
                     $list[] = $val;
-
+                    $err	= $memcache->get('num_'.$val['ds_id']);
+                    file_put_contents('./data_at.txt',date('Y-m-d H:i:s').'_'.$key.$val['ds_id'].'_err_'.print_r($err,true).PHP_EOL,FILE_APPEND);
                     $data = array(
                         'error_type' => '1',
                         'errorTime'  => time(),
-                        'reason'     => 2
+                        'reason'     => 2,
+                        'error_num'  => $err
                     );
 
                     $insert_id = $tableClass->insert('dev_error',$data);
@@ -102,18 +116,23 @@ if(!empty($resolved_body)){
 
         }
 
-        $newlist = unique($list);
+        $new_list = unique($list);
         //判断是否存在超时的数据
-        if(!empty($newlist)){
-            foreach($newlist as $ke =>$va){
-
+        if(!empty($new_list)){
+            foreach($new_list as $ke =>$va){
+                $va['err_num'] = $memcache->get('num_'.$va['ds_id']);
+                file_put_contents('./data_at.txt',date('Y-m-d H:i:s').'_'.$ke.$va['ds_id'].'_va_'.print_r($va,true).PHP_EOL,FILE_APPEND);
                 //判断数据是否已经入库
-                $getlist = $tableClass ->getList('data_lag','*',"at={$va['at']}");
-                if(empty($getlist)){
+                $lagList = $tableClass ->getList('data_lag','*',"at={$va['at']} AND ds_id='{$va['ds_id']}'");
+                file_put_contents('./data_at.txt',date('Y-m-d H:i:s').'_延时数据查询_'.print_r($lagList,true).PHP_EOL,FILE_APPEND);
+                if(empty($lagList)){
                     $res = $tableClass ->insert('data_lag',$va);
+                    file_put_contents('./data_at.txt',date('Y-m-d H:i:s').'_延时数据入库_'.print_r($res,true).PHP_EOL,FILE_APPEND);
                 }
             }
         }
+
+        file_put_contents('./data_at.txt',date('Y-m-d H:i:s').'_数据延时list_'.print_r($new_list,true).PHP_EOL,FILE_APPEND);
         $cache_re = $memcache->set($ds_id, $endArr);
         file_put_contents('./data.txt',date('Y-m-d H:i:s').print_r($cache_re,true).PHP_EOL,FILE_APPEND);
 

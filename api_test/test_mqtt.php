@@ -19,13 +19,13 @@ require_once "../func.php";
 //$raw_input = $GLOBALS['HTTP_RAW_POST_DATA'];
 $raw_input = file_get_contents('php://input');
 $resolved_body = Util::resolveBody($raw_input);
-//echo $resolved_body;
+//echo $resolved_body;die;
 file_put_contents('./data_mqtt.txt',date('Y-m-d H:i:s').print_r('开始打印',true).PHP_EOL,FILE_APPEND);
 $tableClass = new table($config);
 $memcache   = new Memcache;
-$memcache_obj = $memcache->connect("localhost", 11211);
+$memcache_obj = $memcache->connect("s", 11211);
 
-$resolved_body = Array
+/*$resolved_body = Array
 (
     0 => Array
     (
@@ -63,12 +63,15 @@ $resolved_body = Array
         'dev_id' => 11306166
         )
 
-);
+);*/
 //判断推送数据是否为空，为空时则告警
 if(!empty($resolved_body)){
 
     if($resolved_body['type'] == 2){//数据为设备在线信息
         $resolved_body['at'] = date('Y-m-d H:i:s',$resolved_body['at']/1000);
+        $new_resolved = $resolved_body;
+        $memcache->delete('humi');
+        $memcache->delete('temp');
 
     }else{//数据流信息
         $str        = date('YmdHis').'_'.$resolved_body[0]['ds_id'];
@@ -85,23 +88,25 @@ if(!empty($resolved_body)){
         $start_res  = $tableClass->insert('data_str_mqtt',$startArr);
         $end_res    = $tableClass->insert('data_str_mqtt',$endArr);
 
+        $err_num = date('YmdHis').rand(1000,9999);//报错编号
         $list = array();
         foreach($resolved_body as $key => $val){
             unset($val['type']);
             if($key == 0){
                 $cache_data = $memcache->get($ds_id);
                 file_put_contents('./data_mqtt_at.txt',date('Y-m-d H:i:s').'_sess_'.print_r($cache_data,true).PHP_EOL,FILE_APPEND);
-                if(isset($cache_data) ){
+                if( !empty($cache_data) ){
                     $diff0 = $val['at']-$cache_data['at'];
                     file_put_contents('./data_mqtt_at.txt',date('Y-m-d H:i:s').'_'.$key.$val['ds_id'].'_减_'.print_r($diff0,true).PHP_EOL,FILE_APPEND);
                     if( ($val['at']-$cache_data['at']) > 10000 ){//判断数据的间隔时间是否超时
                         $list[] = $cache_data;
                         $list[] = $val;
-
+                        file_put_contents('./data_mqtt_at.txt',date('Y-m-d H:i:s').'_'.$key.$val['ds_id'].'_list_'.print_r($list,true).PHP_EOL,FILE_APPEND);
                         $data = array(
                             'error_type' => '1',
                             'errorTime'  => time(),
-                            'reason'     => 2
+                            'reason'     => 2,
+                            'error_num'  => $err_num
                         );
 
                         $insert_id = $tableClass->insert('data_error_mqtt',$data);
@@ -125,7 +130,8 @@ if(!empty($resolved_body)){
                     $data = array(
                         'error_type' => '1',
                         'errorTime'  => time(),
-                        'reason'     => 2
+                        'reason'     => 2,
+                        'error_num'  => $err_num
                     );
 
                     $insert_id = $tableClass->insert('data_error_mqtt',$data);
@@ -143,10 +149,11 @@ if(!empty($resolved_body)){
             //$resolved_body[$key]['at'] = date('Y-m-d H:i:s',$val['at']/1000);
         }
 
-        $newlist = unique($list);
+        $new_list = unique($list);
         //判断是否存在超时的数据
-        if(!empty($newlist)){
-            foreach($newlist as $ke =>$va){
+        if(!empty($new_list)){
+            foreach($new_list as $ke =>$va){
+                $va['err_num'] = $err_num;
 
                 //判断数据是否已经入库
                 $getlist = $tableClass ->getList('data_lag_mqtt','*',"at={$va['at']}");
